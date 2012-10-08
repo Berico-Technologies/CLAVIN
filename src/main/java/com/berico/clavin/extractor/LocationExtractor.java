@@ -53,8 +53,8 @@ public class LocationExtractor {
 	private TokenizerME tokenizer;
 	
 	// resource files used by Apache OpenNLP Name Finder
-	private static final String pathToNERModel = "src/main/resources/en-ner-location.bin";
-	private static final String pathToTokenizerModel = "src/main/resources/en-token.bin";
+	private static final String pathToNERModel = "/en-ner-location.bin";
+	private static final String pathToTokenizerModel = "/en-token.bin";
 	
 	/**
 	 * Builds a {@link LocationExtractor} by instantiating the OpenNLP
@@ -63,8 +63,8 @@ public class LocationExtractor {
 	 * @throws IOException 
 	 */
 	public LocationExtractor() throws IOException {
-		nameFinder = new NameFinderME(new TokenNameFinderModel(new FileInputStream(pathToNERModel)));
-		tokenizer = new TokenizerME(new TokenizerModel(new FileInputStream(pathToTokenizerModel)));
+		nameFinder = new NameFinderME(new TokenNameFinderModel( LocationExtractor.class.getResourceAsStream(pathToNERModel)));
+		tokenizer = new TokenizerME(new TokenizerModel(LocationExtractor.class.getResourceAsStream(pathToTokenizerModel)));
 	}
 	
 	/**
