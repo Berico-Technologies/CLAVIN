@@ -59,7 +59,7 @@ public class GeoParserTest {
 	@Test
 	public void testParse() throws IOException, ParseException {
 		// instantiate the CLAVIN GeoParser
-		GeoParser parser = new GeoParser();
+		GeoParser parser = new GeoParser("./IndexDirectory");
 		
 		// sample text to be geoparsed
 		String inputText = "Calvin Coolidge was the 30th president " +

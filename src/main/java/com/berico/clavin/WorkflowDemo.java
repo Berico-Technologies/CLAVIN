@@ -54,7 +54,7 @@ public class WorkflowDemo {
 	public static void main(String[] args) throws IOException, ParseException {
 		
 		// Instantiate the CLAVIN GeoParser
-		GeoParser parser = new GeoParser();
+		GeoParser parser = new GeoParser("./IndexDirectory");
 		
 		// Unstructured text file about Somalia to be geoparsed
 		File inputFile = new File("src/test/resources/sample-docs/Somalia-doc.txt");

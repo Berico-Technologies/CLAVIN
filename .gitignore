@@ -1,5 +1,9 @@
 target/**
 indexDirectory/**
+IndexDirectory/
+.settings/
+.classpath
+.project
 allCountries.zip
 allCountries.txt
 !.gitignore

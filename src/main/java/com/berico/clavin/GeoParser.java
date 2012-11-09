@@ -60,7 +60,7 @@ public class GeoParser {
 	private LocationResolver resolver;
 	
 	// location of Lucene index built from gazetteer
-	private String pathToLuceneIndex = "./IndexDirectory";
+	private String pathToLuceneIndex = null;
 	
 	// switch controlling use of fuzzy matching
 	private final boolean fuzzy;
@@ -73,10 +73,10 @@ public class GeoParser {
 	 * @throws IOException
 	 * @throws ParseException
 	 */
-	public GeoParser() throws IOException, ParseException {
+	public GeoParser( String pathToIndex) throws IOException, ParseException {
 		// default options for resolving location names (essentially
 		// looks for exact matches having the highest population)
-		this(1, 1, false);
+		this(pathToIndex, 1, 1, false);
 	}
 	
 	/**
@@ -92,10 +92,10 @@ public class GeoParser {
 	 * @throws IOException
 	 * @throws ParseException
 	 */
-	public GeoParser(int maxHitDepth, int maxContextWindow, boolean fuzzy) throws IOException, ParseException {
+	public GeoParser(String pathToIndex, int maxHitDepth, int maxContextWindow, boolean fuzzy) throws IOException, ParseException {
 		// instantiates an {@link ApacheExtractor} and passes it along
 		// to the primary {@link GeoParser} constructor
-		this(new ApacheExtractor(), maxHitDepth, maxContextWindow, fuzzy);
+		this(pathToIndex, new ApacheExtractor(), maxHitDepth, maxContextWindow, fuzzy);
 	}
 	
 	/**
@@ -117,9 +117,9 @@ public class GeoParser {
 	 * @throws ParseException 
 	 * @throws IOException 
 	 */
-	public GeoParser(LocationExtractor extractor, int maxHitDepth, int maxContextWindow, boolean fuzzy) throws IOException, ParseException {
+	public GeoParser(String pathToIndex, LocationExtractor extractor, int maxHitDepth, int maxContextWindow, boolean fuzzy) throws IOException, ParseException {
 		logger.debug("Initializing GeoParser; please wait...");
-		
+		this.pathToLuceneIndex = pathToIndex;
 		this.extractor = extractor;
 		this.fuzzy = fuzzy;
 		
