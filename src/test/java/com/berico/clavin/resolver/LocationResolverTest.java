@@ -5,8 +5,11 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
+import com.berico.clavin.extractor.LocationOccurrence;
 import org.apache.log4j.Logger;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.junit.Before;
@@ -59,7 +62,17 @@ public class LocationResolverTest {
 	int RESTON_VA = 4781530;
 	int STRAßENHAUS_DE = 2826158;
 	int GUN_BARREL_CITY_TX = 4695535;
-	
+
+    //this convenience method turns an array of location name strings into a list of occurrences with fake positions.
+    //(useful for tests that don't care about position in the document)
+    public static List<LocationOccurrence> makeOccurrencesFromNames(String[] locationNames) {
+        List<LocationOccurrence> locations = new ArrayList<LocationOccurrence>(locationNames.length);
+        for(int i = 0; i < locationNames.length; ++i ) {
+            locations.add(new LocationOccurrence(locationNames[i], i));
+        }
+        return locations;
+    }
+
 	/**
 	 * Instantiate a {@link LocationResolver} without context-based
 	 * heuristic matching and with fuzzy matching turned on.
@@ -83,9 +96,10 @@ public class LocationResolverTest {
 	 */
 	@Test
 	public void testResolveLocations() throws IOException, ParseException {
-		String[] locations = {"Reston", "reston", "RESTON", "Рестон", "Straßenhaus"};
+		String[] locationNames = {"Reston", "reston", "RESTON", "Рестон", "Straßenhaus"};
+
 		
-		resolvedLocations = resolverNoHeuristics.resolveLocations(asList(locations), true);
+		resolvedLocations = resolverNoHeuristics.resolveLocations(makeOccurrencesFromNames(locationNames), true);
 		
 		assertNotNull("Null results list received from LocationResolver", resolvedLocations);
 		assertFalse("Empty results list received from LocationResolver", resolvedLocations.isEmpty());
@@ -100,7 +114,7 @@ public class LocationResolverTest {
 		// test empty input
 		String[] noLocations = {};
 		
-		resolvedLocations = resolverNoHeuristics.resolveLocations(asList(noLocations), true);
+		resolvedLocations = resolverNoHeuristics.resolveLocations(makeOccurrencesFromNames(noLocations), true);
 		
 		assertNotNull("Null results list received from LocationResolver", resolvedLocations);
 		assertTrue("Non-empty results from LocationResolver on empty input", resolvedLocations.isEmpty());
@@ -125,7 +139,7 @@ public class LocationResolverTest {
 				"Dallas/Fort Worth Airport", "New Delhi/Chennai", "Falkland ] Islands", "Baima ] County",
 				"MUSES \" City Hospital", "North \" Carolina State"};
 		
-		resolvedLocations = resolverNoHeuristics.resolveLocations(asList(locations), true);
+		resolvedLocations = resolverNoHeuristics.resolveLocations(makeOccurrencesFromNames(locations), true);
 		
 		// if no exceptions are thrown, the test is assumed to have succeeded
 	}
@@ -141,7 +155,7 @@ public class LocationResolverTest {
 	public void testFuzzyMatching() throws IOException, ParseException {
 		String[] locations = {"Bostonn", "Reston12", "Bostn", "Straßenha", "Straßenhaus Airport", "Gun Barrel"};
 		
-		resolvedLocations = resolverNoHeuristics.resolveLocations(asList(locations), true);
+		resolvedLocations = resolverNoHeuristics.resolveLocations(makeOccurrencesFromNames(locations), true);
 		
 		assertEquals("LocationResolver failed on extra char", BOSTON_MA, resolvedLocations.get(0).geoname.geonameID);
 		assertEquals("LocationResolver failed on extra chars", RESTON_VA, resolvedLocations.get(1).geoname.geonameID);

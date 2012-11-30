@@ -1,5 +1,6 @@
 package com.berico.clavin.resolver;
 
+import com.berico.clavin.extractor.LocationOccurrence;
 import org.apache.lucene.document.Document;
 
 import com.berico.clavin.gazetteer.GeoName;
@@ -49,7 +50,7 @@ public class ResolvedLocation {
 	public GeoName geoname;
 	
 	// original location name extracted from text
-	public String inputName;
+	public LocationOccurrence location;
 	
 	// name from gazetteer record that the inputName was matched against
 	public String matchedName;
@@ -67,12 +68,12 @@ public class ResolvedLocation {
 	 * 
 	 * @param luceneDoc		document from Lucene index representing a gazetteer record
 	 */
-	public ResolvedLocation(Document luceneDoc, String inputName, boolean fuzzy) {
+	public ResolvedLocation(Document luceneDoc, LocationOccurrence location, boolean fuzzy) {
 		
 		// instantiate a GeoName object from the gazetteer record
 		this.geoname = GeoName.parseFromGeoNamesRecord(luceneDoc.get("geoname"));
 		
-		this.inputName = inputName;
+		this.location = location;
 		
 		// get the name in the Lucene document matched to the given
 		// location name extracted from the text
@@ -83,7 +84,7 @@ public class ResolvedLocation {
 		// for fuzzy matches, confidence is based on the edit distance
 		// between the given location name and the matched name
 		if (fuzzy)
-			this.confidence = 1 / (damerauLevenshteinDistanceCaseInsensitive(inputName, matchedName) + (float)0.5);
+			this.confidence = 1 / (damerauLevenshteinDistanceCaseInsensitive(location.text, matchedName) + (float)0.5);
 		else this.confidence = 1; // exact String match
 		/// TODO: fix this confidence score... it doesn't fully make sense
 	}
@@ -118,6 +119,6 @@ public class ResolvedLocation {
 	 */
 	@Override
 	public String toString() {
-		return "Resolved \"" + inputName + "\" as: \"" + matchedName + "\" {" + geoname + "}, confidence: " + confidence + ", fuzzy: " + fuzzy;
+		return "Resolved \"" + location.text + "\" as: \"" + matchedName + "\" {" + geoname + "}, position:" + location.position + ", confidence: " + confidence + ", fuzzy: " + fuzzy;
 	}
 }

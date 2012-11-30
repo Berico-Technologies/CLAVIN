@@ -111,7 +111,7 @@ public class LocationResolverHeuristicsTest {
 	public void testNoHeuristics() throws IOException, ParseException {
 		String[] locations = {"Haverhill", "Worcester", "Springfield", "Kansas City"};
 		
-		resolvedLocations = resolverNoHeuristics.resolveLocations(asList(locations), false);
+		resolvedLocations = resolverNoHeuristics.resolveLocations(LocationResolverTest.makeOccurrencesFromNames(locations), false);
 		
 		assertEquals("LocationResolver chose the wrong \"Haverhill\"", HAVERHILL_MA, resolvedLocations.get(0).geoname.geonameID);
 		assertEquals("LocationResolver chose the wrong \"Worcester\"", WORCESTER_UK, resolvedLocations.get(1).geoname.geonameID);
@@ -130,7 +130,7 @@ public class LocationResolverHeuristicsTest {
 	public void testHeuristicsMassachusetts() throws IOException, ParseException {
 		String[] locations = {"Boston", "Haverhill", "Worcester", "Springfield", "Leominister"};
 		
-	    resolvedLocations = resolverWithHeuristics.resolveLocations(asList(locations), true);
+	    resolvedLocations = resolverWithHeuristics.resolveLocations(LocationResolverTest.makeOccurrencesFromNames(locations), true);
 		
 		assertEquals("LocationResolver chose the wrong \"Boston\"", BOSTON_MA, resolvedLocations.get(0).geoname.geonameID);
 		assertEquals("LocationResolver chose the wrong \"Haverhill\"", HAVERHILL_MA, resolvedLocations.get(1).geoname.geonameID);
@@ -149,7 +149,7 @@ public class LocationResolverHeuristicsTest {
 	public void testHeuristicsIllinois() throws IOException, ParseException {
 		String[] locations = {"Chicago", "Rockford", "Springfield", "Decatur"};
 		
-	    resolvedLocations = resolverWithHeuristics.resolveLocations(asList(locations), true);
+	    resolvedLocations = resolverWithHeuristics.resolveLocations(LocationResolverTest.makeOccurrencesFromNames(locations), true);
 	    
 		assertEquals("LocationResolver chose the wrong \"Chicago\"", CHICAGO_IL, resolvedLocations.get(0).geoname.geonameID);
 		assertEquals("LocationResolver chose the wrong \"Rockford\"", ROCKFORD_IL, resolvedLocations.get(1).geoname.geonameID);
@@ -168,7 +168,7 @@ public class LocationResolverHeuristicsTest {
 	public void testHeuristicsMissouri() throws IOException, ParseException {	    
 		String[] locations = {"Kansas City", "Springfield", "St. Louis", "Independence"};
 		
-	    resolvedLocations = resolverWithHeuristics.resolveLocations(asList(locations), true);
+	    resolvedLocations = resolverWithHeuristics.resolveLocations(LocationResolverTest.makeOccurrencesFromNames(locations), true);
 	    
 		assertEquals("LocationResolver chose the wrong \"Kansas City\"", KANSAS_CITY_MO, resolvedLocations.get(0).geoname.geonameID);
 		assertEquals("LocationResolver chose the wrong \"Springfield\"", SPRINGFIELD_MO, resolvedLocations.get(1).geoname.geonameID);
@@ -187,7 +187,7 @@ public class LocationResolverHeuristicsTest {
 	public void testHeuristicsEngland() throws IOException, ParseException {	 		
 		String[] locations = {"London", "Manchester", "Haverhill"};
 		
-	    resolvedLocations = resolverWithHeuristics.resolveLocations(asList(locations), true);
+	    resolvedLocations = resolverWithHeuristics.resolveLocations(LocationResolverTest.makeOccurrencesFromNames(locations), true);
 	    
 		assertEquals("LocationResolver chose the wrong \"London\"", LONDON_UK, resolvedLocations.get(0).geoname.geonameID);
 		assertEquals("LocationResolver chose the wrong \"Manchester\"", MANCHESTER_UK, resolvedLocations.get(1).geoname.geonameID);
@@ -205,7 +205,7 @@ public class LocationResolverHeuristicsTest {
 	public void testHeuristicsOntario() throws IOException, ParseException {	 		
 		String[] locations = {"Toronto", "Ottawa", "Hamilton", "Kitchener", "London"};
 		
-	    resolvedLocations = resolverWithHeuristics.resolveLocations(asList(locations), true);
+	    resolvedLocations = resolverWithHeuristics.resolveLocations(LocationResolverTest.makeOccurrencesFromNames(locations), true);
 	    
 	    assertEquals("LocationResolver chose the wrong \"Toronto\"", TORONTO_ON, resolvedLocations.get(0).geoname.geonameID);
 		assertEquals("LocationResolver chose the wrong \"Ottawa\"", OTTAWA_ON, resolvedLocations.get(1).geoname.geonameID);

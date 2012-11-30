@@ -6,6 +6,9 @@ import java.util.List;
 
 import opennlp.tools.namefind.NameFinderME;
 import opennlp.tools.namefind.TokenNameFinderModel;
+import opennlp.tools.sentdetect.SentenceDetector;
+import opennlp.tools.sentdetect.SentenceDetectorME;
+import opennlp.tools.sentdetect.SentenceModel;
 import opennlp.tools.tokenize.TokenizerME;
 import opennlp.tools.tokenize.TokenizerModel;
 import opennlp.tools.util.Span;
@@ -50,10 +53,15 @@ public class ApacheExtractor implements LocationExtractor {
 	
 	// used to tokenize plain text into the OpenNLP format
 	private TokenizerME tokenizer;
+
+    // used to split the input into sentences before finding names
+    private SentenceDetectorME sentenceDetector;
 	
 	// resource files used by Apache OpenNLP Name Finder
 	private static final String pathToNERModel = "/en-ner-location.bin";
 	private static final String pathToTokenizerModel = "/en-token.bin";
+    private static final String pathToSentenceDetectorModel = "/en-sent.bin";
+
 	
 	/**
 	 * Builds an {@link ApacheExtractor} by instantiating the OpenNLP
@@ -64,6 +72,7 @@ public class ApacheExtractor implements LocationExtractor {
 	public ApacheExtractor() throws IOException {
 		nameFinder = new NameFinderME(new TokenNameFinderModel(ApacheExtractor.class.getResourceAsStream(pathToNERModel)));
 		tokenizer = new TokenizerME(new TokenizerModel(ApacheExtractor.class.getResourceAsStream(pathToTokenizerModel)));
+        sentenceDetector = new SentenceDetectorME(new SentenceModel(ApacheExtractor.class.getResourceAsStream(pathToSentenceDetectorModel)));
 	}
 	
 	/**
@@ -72,33 +81,59 @@ public class ApacheExtractor implements LocationExtractor {
 	 * Name Finder.
 	 * 
 	 * @param plainText		Contents of text document
-	 * @return				List of location name Strings
-	 */
-	public List<String> extractLocationNames(String plainText) {
-		// tokenize the text into the required OpenNLP format
-		String[] tokens = tokenizer.tokenize(plainText);
-		
-		// find the location names in the tokenized text
-		Span nameSpans[] = nameFinder.find(tokens);
-		
-		// create the return object
-		List<String> nerResults = new ArrayList<String>();
-		
-		// extract the location names found in the text and add them to
-		// the return object
-		for (Span span : nameSpans) {
-			String locationName = "";
-			for (int i = span.getStart(); i < span.getEnd(); i++)
-				locationName = locationName + tokens[i] + " ";
-			locationName = locationName.trim();
-			nerResults.add(locationName);
-		}
-		
-		// this is necessary to maintain consistent results across
-		// multiple runs on the same data, which is what we want
-		nameFinder.clearAdaptiveData();
-		
-		return nerResults;
-	}
+     * @return List of location names and positions
+     */
+    public List<LocationOccurrence> extractLocationNames(String plainText) {
+        if(plainText == null) {
+            throw new IllegalArgumentException("plaintext input to extractLocationNames should not be null");
+        }
+
+        List<LocationOccurrence> nerResults = new ArrayList<LocationOccurrence>();
+
+        //First step: find the start and end position of each sentence in the document.
+        //each sentence gets processed on its own.
+        //the values used in these Spans are string character offsets
+        Span sentenceSpans[] = sentenceDetector.sentPosDetect(plainText);
+
+        for (Span sentenceSpan : sentenceSpans) {
+
+            String sentence = plainText.substring(sentenceSpan.getStart(), sentenceSpan.getEnd());
+
+            // tokenize the text into the required OpenNLP format
+            String[] tokens = tokenizer.tokenize(sentence);
+
+            //the values used in these Spans are string character offsets of each token from the sentence beginning
+            Span[] tokenPositionsWithinSentence = tokenizer.tokenizePos(sentence);
+
+            // find the location names in the tokenized text
+            // the values used in these Spans are NOT string character offsets, they are indices into the 'tokens' array
+            Span names[] = nameFinder.find(tokens);
+
+
+            //for each name that got found, create our corresponding occurrence
+            for (Span name : names) {
+
+                //find offsets relative to the start of the sentence
+                int beginningOfFirstWord = tokenPositionsWithinSentence[name.getStart()].getStart();
+                int endOfLastWord = tokenPositionsWithinSentence[name.getEnd() - 1].getEnd(); //-1 because the high end of a Span is noninclusiv
+
+                //to get offsets relative to the document as a whole, just add the offset for the sentence itself
+                int startOffsetInDoc = sentenceSpan.getStart() + beginningOfFirstWord;
+                int endOffsetInDoc = sentenceSpan.getStart() + endOfLastWord;
+
+                //look back into the original input string to figure out what the text is that I got a hit on
+                String nameInDocument = plainText.substring(startOffsetInDoc, endOffsetInDoc);
+
+                nerResults.add(new LocationOccurrence(nameInDocument, startOffsetInDoc));
+            }
+
+        }
+
+        // this is necessary to maintain consistent results across
+        // multiple runs on the same data, which is what we want
+        nameFinder.clearAdaptiveData();
+
+        return nerResults;
+    }
 
 }

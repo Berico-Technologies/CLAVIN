@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import com.berico.clavin.extractor.LocationOccurrence;
 import org.apache.log4j.Logger;
 import org.apache.lucene.queryparser.classic.ParseException;
 
@@ -142,7 +143,7 @@ public class GeoParser {
 	 */
 	public List<ResolvedLocation> parse(String inputText) throws IOException, ParseException {
 		// first, extract location names from the text
-		List<String> locationNames = extractor.extractLocationNames(inputText);
+		List<LocationOccurrence> locationNames = extractor.extractLocationNames(inputText);
 		
 		// then, resolve the extracted location names against a
 		// gazetteer to produce geographic entities representing the

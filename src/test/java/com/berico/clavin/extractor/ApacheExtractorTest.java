@@ -59,13 +59,13 @@ public class ApacheExtractorTest {
 		ApacheExtractor extractor = new ApacheExtractor();
 		File inputFile = new File("src/test/resources/sample-docs/Somalia-doc.txt");
 		String inputString = TextUtils.fileToString(inputFile);
-		List<String> locationNames1 = extractor.extractLocationNames(inputString);
+		List<LocationOccurrence> locationNames1 = extractor.extractLocationNames(inputString);
 		
 		assertNotNull("Null location name list received from extractor.", locationNames1);
 		assertFalse("Empty location name list received from extractor.", locationNames1.isEmpty());
 		assertTrue("Extractor choked/quit after first LOCATION.", locationNames1.size() > 1);
 		
-		List<String> locationNames2 = extractor.extractLocationNames(inputString);		
+		List<LocationOccurrence> locationNames2 = extractor.extractLocationNames(inputString);
 		assertEquals("Different extractor results for subsequent identical document.", locationNames1, locationNames2);
 	}
 	

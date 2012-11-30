@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import com.berico.clavin.extractor.LocationOccurrence;
 import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.index.DirectoryReader;
@@ -131,11 +132,11 @@ public class LocationResolver {
 	 * @throws IOException
 	 * @throws ParseException
 	 */
-	private List<ResolvedLocation> getCandidateMatches(String locationName, boolean fuzzy)
+	private List<ResolvedLocation> getCandidateMatches(LocationOccurrence locationName, boolean fuzzy)
 			throws IOException, ParseException{
 		
 		// santize the query input
-		String sanitizedLocationName = escape(locationName.toLowerCase());
+		String sanitizedLocationName = escape(locationName.text.toLowerCase());
 		
 		try{
 	  		// Lucene query used to look for matches based on the
@@ -355,7 +356,7 @@ public class LocationResolver {
      * Resolves the supplied list of location names into
      * {@link ResolvedLocation}s containing {@link GeoName{ objects.
      * 
-     * Calls {@link LocationResolver#getCandidateMatches(String)} on
+     * Calls {@link LocationResolver#getCandidateMatches(LocationOccurrence, boolean)} on
      * each location name to find all possible matches, then uses
      * heuristics to select the best match for each by calling
      * {@link LocationResolver#pickBestCandidates(List<List<ResolvedLocation>>)}.
@@ -366,7 +367,7 @@ public class LocationResolver {
      * @throws ParseException 
      * @throws IOException 
      **/
-    public List<ResolvedLocation> resolveLocations(List<String> locations, boolean fuzzy) throws IOException, ParseException {
+    public List<ResolvedLocation> resolveLocations(List<LocationOccurrence> locations, boolean fuzzy) throws IOException, ParseException {
     	
     	// forgetting something?
     	if (locations == null)
@@ -378,7 +379,7 @@ public class LocationResolver {
 			List<List<ResolvedLocation>> allCandidates = new ArrayList<List<ResolvedLocation>>();
 			
 			// loop through all the location names
-			for (String location : locations) {
+			for (LocationOccurrence location : locations) {
 				// get all possible matches
 				List<ResolvedLocation> candidates = getCandidateMatches(location, fuzzy);
 				
@@ -410,7 +411,7 @@ public class LocationResolver {
 			List<ResolvedLocation> candidateLocations;
 			
 			// loop through all the location names
-			for (String location : locations) {
+			for (LocationOccurrence location : locations) {
 				// choose the top-sorted candidate for each individual
 				// location name
 				candidateLocations = getCandidateMatches(location, fuzzy);
