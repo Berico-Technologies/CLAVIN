@@ -77,7 +77,7 @@ public class LocationResolverHeuristicsTest {
 	int GUN_BARREL_CITY_TX = 4695535;
 	int TORONTO_ON = 6167865;
 	int OTTAWA_ON = 6094817;
-	int HAMILTON_ON = 5969785;
+	int HAMILTON_ON = 5969782;
 	int KITCHENER_ON = 5992996;
 	int LONDON_ON = 6058560;
 	
