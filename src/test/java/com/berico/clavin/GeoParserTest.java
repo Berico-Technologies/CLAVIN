@@ -2,7 +2,6 @@ package com.berico.clavin;
 
 import static org.junit.Assert.assertEquals;
 
-import java.io.IOException;
 import java.util.List;
 
 import org.apache.lucene.queryparser.classic.ParseException;
@@ -57,9 +56,9 @@ public class GeoParserTest {
 	 * @throws IOException 
 	 */
 	@Test
-	public void testParse() throws IOException, ParseException {
+	public void testParse() throws Exception {
 		// instantiate the CLAVIN GeoParser
-		GeoParser parser = new GeoParser("./IndexDirectory");
+		GeoParser parser = GeoParserFactory.getDefault("./IndexDirectory");
 		
 		// sample text to be geoparsed
 		String inputText = "Calvin Coolidge was the 30th president " +

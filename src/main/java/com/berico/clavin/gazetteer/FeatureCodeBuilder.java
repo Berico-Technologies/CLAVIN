@@ -67,6 +67,7 @@ public class FeatureCodeBuilder {
 				}
 			}
 		}
+		in.close();
 	}
 
 }

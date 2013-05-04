@@ -1,4 +1,4 @@
-package com.berico.clavin.resolver;
+package com.berico.clavin.resolver.lucene;
 
 import static org.junit.Assert.assertEquals;
 
@@ -6,10 +6,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.berico.clavin.resolver.ResolvedLocation;
+import com.berico.clavin.resolver.lucene.LuceneLocationResolver;
 
 /*#####################################################################
  * 
@@ -35,7 +39,7 @@ import org.junit.Test;
  * 
  * ====================================================================
  * 
- * LocationResolverHeuristicsTest.java
+ * LuceneLocationResolverHeuristicsTest.java
  * 
  *###################################################################*/
 
@@ -44,14 +48,14 @@ import org.junit.Test;
  * {@link ResolvedLocation} objects as performed by
  * {@link LocationResolver#resolveLocations(List<String>)}.
  */
-public class LocationResolverHeuristicsTest {
+public class LuceneLocationResolverHeuristicsTest {
 	
-	public final static Logger logger = Logger.getLogger(LocationResolverHeuristicsTest.class);
+	public final static Logger logger = LoggerFactory.getLogger(LuceneLocationResolverHeuristicsTest.class);
 	
 	// objects required for running tests
 	File indexDirectory;
-	LocationResolver resolverNoHeuristics;
-	LocationResolver resolverWithHeuristics;
+	LuceneLocationResolver resolverNoHeuristics;
+	LuceneLocationResolver resolverWithHeuristics;
 	List<ResolvedLocation> resolvedLocations;
 	
 	// expected geonameID numbers for given location names
@@ -82,7 +86,7 @@ public class LocationResolverHeuristicsTest {
 	int LONDON_ON = 6058560;
 	
 	/**
-	 * Instantiate two {@link LocationResolver} objects, one without
+	 * Instantiate two {@link LuceneLocationResolver} objects, one without
 	 * context-based heuristic matching and other with it turned on.
 	 * 
 	 * @throws IOException
@@ -91,15 +95,15 @@ public class LocationResolverHeuristicsTest {
 	@Before
 	public void setUp() throws IOException, ParseException {
 		indexDirectory = new File("./IndexDirectory");
-		resolverNoHeuristics = new LocationResolver(indexDirectory, 1, 1);
-		resolverWithHeuristics = new LocationResolver(indexDirectory, 5, 5);
+		resolverNoHeuristics = new LuceneLocationResolver(indexDirectory, 1, 1);
+		resolverWithHeuristics = new LuceneLocationResolver(indexDirectory, 5, 5);
 	}
 	
 	/**
 	 * Ensure we select the correct {@link ResolvedLocation} objects
 	 * without using context-based heuristic matching.
 	 * 
-	 * Without heuristics, {@link LocationResolver} will default to
+	 * Without heuristics, {@link LuceneLocationResolver} will default to
 	 * mapping location name Strings to the matching
 	 * {@link ResolvedLocation} object with the greatest population.
 	 * 
@@ -110,7 +114,7 @@ public class LocationResolverHeuristicsTest {
 	public void testNoHeuristics() throws IOException, ParseException {
 		String[] locations = {"Haverhill", "Worcester", "Springfield", "Kansas City"};
 		
-		resolvedLocations = resolverNoHeuristics.resolveLocations(LocationResolverTest.makeOccurrencesFromNames(locations), false);
+		resolvedLocations = resolverNoHeuristics.resolveLocations(LuceneLocationResolverTest.makeOccurrencesFromNames(locations), false);
 		
 		assertEquals("LocationResolver chose the wrong \"Haverhill\"", HAVERHILL_MA, resolvedLocations.get(0).geoname.geonameID);
 		assertEquals("LocationResolver chose the wrong \"Worcester\"", WORCESTER_UK, resolvedLocations.get(1).geoname.geonameID);
@@ -129,7 +133,7 @@ public class LocationResolverHeuristicsTest {
 	public void testHeuristicsMassachusetts() throws IOException, ParseException {
 		String[] locations = {"Boston", "Haverhill", "Worcester", "Springfield", "Leominister"};
 		
-	    resolvedLocations = resolverWithHeuristics.resolveLocations(LocationResolverTest.makeOccurrencesFromNames(locations), true);
+	    resolvedLocations = resolverWithHeuristics.resolveLocations(LuceneLocationResolverTest.makeOccurrencesFromNames(locations), true);
 		
 		assertEquals("LocationResolver chose the wrong \"Boston\"", BOSTON_MA, resolvedLocations.get(0).geoname.geonameID);
 		assertEquals("LocationResolver chose the wrong \"Haverhill\"", HAVERHILL_MA, resolvedLocations.get(1).geoname.geonameID);
@@ -148,7 +152,7 @@ public class LocationResolverHeuristicsTest {
 	public void testHeuristicsIllinois() throws IOException, ParseException {
 		String[] locations = {"Chicago", "Rockford", "Springfield", "Decatur"};
 		
-	    resolvedLocations = resolverWithHeuristics.resolveLocations(LocationResolverTest.makeOccurrencesFromNames(locations), true);
+	    resolvedLocations = resolverWithHeuristics.resolveLocations(LuceneLocationResolverTest.makeOccurrencesFromNames(locations), true);
 	    
 		assertEquals("LocationResolver chose the wrong \"Chicago\"", CHICAGO_IL, resolvedLocations.get(0).geoname.geonameID);
 		assertEquals("LocationResolver chose the wrong \"Rockford\"", ROCKFORD_IL, resolvedLocations.get(1).geoname.geonameID);
@@ -167,7 +171,7 @@ public class LocationResolverHeuristicsTest {
 	public void testHeuristicsMissouri() throws IOException, ParseException {	    
 		String[] locations = {"Kansas City", "Springfield", "St. Louis", "Independence"};
 		
-	    resolvedLocations = resolverWithHeuristics.resolveLocations(LocationResolverTest.makeOccurrencesFromNames(locations), true);
+	    resolvedLocations = resolverWithHeuristics.resolveLocations(LuceneLocationResolverTest.makeOccurrencesFromNames(locations), true);
 	    
 		assertEquals("LocationResolver chose the wrong \"Kansas City\"", KANSAS_CITY_MO, resolvedLocations.get(0).geoname.geonameID);
 		assertEquals("LocationResolver chose the wrong \"Springfield\"", SPRINGFIELD_MO, resolvedLocations.get(1).geoname.geonameID);
@@ -186,7 +190,7 @@ public class LocationResolverHeuristicsTest {
 	public void testHeuristicsEngland() throws IOException, ParseException {	 		
 		String[] locations = {"London", "Manchester", "Haverhill"};
 		
-	    resolvedLocations = resolverWithHeuristics.resolveLocations(LocationResolverTest.makeOccurrencesFromNames(locations), true);
+	    resolvedLocations = resolverWithHeuristics.resolveLocations(LuceneLocationResolverTest.makeOccurrencesFromNames(locations), true);
 	    
 		assertEquals("LocationResolver chose the wrong \"London\"", LONDON_UK, resolvedLocations.get(0).geoname.geonameID);
 		assertEquals("LocationResolver chose the wrong \"Manchester\"", MANCHESTER_UK, resolvedLocations.get(1).geoname.geonameID);
@@ -204,7 +208,7 @@ public class LocationResolverHeuristicsTest {
 	public void testHeuristicsOntario() throws IOException, ParseException {	 		
 		String[] locations = {"Toronto", "Ottawa", "Hamilton", "Kitchener", "London"};
 		
-	    resolvedLocations = resolverWithHeuristics.resolveLocations(LocationResolverTest.makeOccurrencesFromNames(locations), true);
+	    resolvedLocations = resolverWithHeuristics.resolveLocations(LuceneLocationResolverTest.makeOccurrencesFromNames(locations), true);
 	    
 	    assertEquals("LocationResolver chose the wrong \"Toronto\"", TORONTO_ON, resolvedLocations.get(0).geoname.geonameID);
 		assertEquals("LocationResolver chose the wrong \"Ottawa\"", OTTAWA_ON, resolvedLocations.get(1).geoname.geonameID);
