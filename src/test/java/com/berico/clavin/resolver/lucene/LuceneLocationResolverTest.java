@@ -1,4 +1,4 @@
-package com.berico.clavin.resolver;
+package com.berico.clavin.resolver.lucene;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -10,12 +10,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.berico.clavin.extractor.LocationOccurrence;
+import com.berico.clavin.resolver.ResolvedLocation;
+import com.berico.clavin.resolver.lucene.LuceneLocationResolver;
 
 /*#####################################################################
  * 
@@ -41,22 +44,22 @@ import com.berico.clavin.extractor.LocationOccurrence;
  * 
  * ====================================================================
  * 
- * LocationResolverTest.java
+ * LuceneLocationResolverTest.java
  * 
  *###################################################################*/
 
 /**
  * Ensures non-heuristic matching and fuzzy matching features are
- * working properly in {@link LocationResolver}.
+ * working properly in {@link LuceneLocationResolver}.
  *
  */
-public class LocationResolverTest {
+public class LuceneLocationResolverTest {
 	
-	public final static Logger logger = Logger.getLogger(LocationResolverHeuristicsTest.class);
+	public final static Logger logger = LoggerFactory.getLogger(LuceneLocationResolverHeuristicsTest.class);
 	
 	// objects required for running tests
 	File indexDirectory;
-	LocationResolver resolverNoHeuristics;
+	LuceneLocationResolver resolverNoHeuristics;
 	List<ResolvedLocation> resolvedLocations;
 	
 	// expected geonameID numbers for given location names
@@ -76,7 +79,7 @@ public class LocationResolverTest {
     }
 
 	/**
-	 * Instantiate a {@link LocationResolver} without context-based
+	 * Instantiate a {@link LuceneLocationResolver} without context-based
 	 * heuristic matching and with fuzzy matching turned on.
 	 * 
 	 * @throws IOException
@@ -86,11 +89,11 @@ public class LocationResolverTest {
 	public void setUp() throws IOException, ParseException {
 		// indexDirectory = new File("./src/test/resources/indices/GeoNamesSampleIndex");
 		indexDirectory = new File("./IndexDirectory");
-		resolverNoHeuristics = new LocationResolver(indexDirectory, 1, 1);
+		resolverNoHeuristics = new LuceneLocationResolver(indexDirectory, 1, 1);
 	}
 
 	/**
-	 * Ensure {@link LocationResolver#resolveLocations(List)} isn't
+	 * Ensure {@link LuceneLocationResolver#resolveLocations(List)} isn't
 	 * choking on input.
 	 * 
 	 * @throws IOException

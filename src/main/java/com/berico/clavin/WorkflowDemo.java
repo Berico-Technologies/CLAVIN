@@ -1,10 +1,7 @@
 package com.berico.clavin;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
-
-import org.apache.lucene.queryparser.classic.ParseException;
 
 import com.berico.clavin.resolver.ResolvedLocation;
 import com.berico.clavin.util.TextUtils;
@@ -48,13 +45,12 @@ public class WorkflowDemo {
 	 * how to use it.
 	 * 
 	 * @param args				not used
-	 * @throws ParseException 
-	 * @throws IOException 
+	 * @throws Exception
 	 */
-	public static void main(String[] args) throws IOException, ParseException {
+	public static void main(String[] args) throws Exception {
 		
 		// Instantiate the CLAVIN GeoParser
-		GeoParser parser = new GeoParser("./IndexDirectory");
+		GeoParser parser = GeoParserFactory.getDefault("./IndexDirectory");
 		
 		// Unstructured text file about Somalia to be geoparsed
 		File inputFile = new File("src/test/resources/sample-docs/Somalia-doc.txt");

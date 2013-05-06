@@ -11,7 +11,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -23,6 +22,8 @@ import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.berico.clavin.gazetteer.GeoName;
 
@@ -63,7 +64,7 @@ import com.berico.clavin.gazetteer.GeoName;
  */
 public class IndexDirectoryBuilder {
 	
-	public final static Logger logger = Logger.getLogger(IndexDirectoryBuilder.class);
+	public final static Logger logger = LoggerFactory.getLogger(IndexDirectoryBuilder.class);
 	
 	// the GeoNames gazetteer file to be loaded
 	static String pathToGazetteer = "./allCountries.txt";

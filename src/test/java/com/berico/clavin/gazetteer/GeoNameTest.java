@@ -82,7 +82,7 @@ public class GeoNameTest {
 		assertEquals("incorrect featureClass", FeatureClass.P, geoname.featureClass);
 		assertEquals("incorrect featureCode", FeatureCode.PPL, geoname.featureCode);
 		assertEquals("incorrect primaryCountryCode", CountryCode.US, geoname.primaryCountryCode);
-    assertEquals("incorrect primaryCountryName", CountryCode.US.name, geoname.getPrimaryCountryName());
+		assertEquals("incorrect primaryCountryName", CountryCode.US.name, geoname.getPrimaryCountryName());
 		assertEquals("incorrect alternateCountryCodes", new ArrayList<CountryCode>(), geoname.alternateCountryCodes);
 		assertEquals("incorrect adminCode1", "VA", geoname.admin1Code);
 		assertEquals("incorrect adminCode2", "059", geoname.admin2Code);
@@ -119,6 +119,8 @@ public class GeoNameTest {
 		
 		geoname = geonames.get(6); // no featureCode
 		assertEquals("incorrect featureClass", FeatureCode.NULL, geoname.featureCode);
+		
+		r.close();
 	}
 
 }
