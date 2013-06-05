@@ -72,7 +72,7 @@ public class LuceneLocationResolverHeuristicsTest {
 	int SPRINGFIELD_MO = 4409896;
 	int ST_LOUIS_MO = 6955119;
 	int INDEPENDENCE_MO = 4391812;
-	int LONDON_UK = 2643743;
+	int LONDON_UK = 2643741;
 	int MANCHESTER_UK = 2643123;
 	int HAVERHILL_UK = 2647310;
 	int WORCESTER_UK = 2633560;
