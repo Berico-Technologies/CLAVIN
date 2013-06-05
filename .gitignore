@@ -8,3 +8,4 @@ allCountries.zip
 allCountries.txt
 !.gitignore
 .DS_Store
+/target

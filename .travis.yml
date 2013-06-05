@@ -1,0 +1,2 @@
+language: java
+script: ./script/ci/run_build.sh

@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.InvocationTargetException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -102,8 +103,12 @@ public class IndexDirectoryBuilder {
 		
 		// load GeoNames gazetteer into Lucene index
 		while ((line = r.readLine()) != null)
+			try {
 			addToIndex(indexWriter, line);
-		
+			} catch (IllegalArgumentException e) {
+				logger.info("Skipping... Error on line:" + line);
+			
+			}
 		// add supplementary gazetteer records to index
 		while ((line = r2.readLine()) != null)
 			addToIndex(indexWriter, line);
