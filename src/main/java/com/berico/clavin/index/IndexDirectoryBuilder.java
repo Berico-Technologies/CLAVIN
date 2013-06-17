@@ -102,14 +102,22 @@ public class IndexDirectoryBuilder {
 		Date start = new Date();
 		
 		// load GeoNames gazetteer into Lucene index
+		
+		int count = 0;
+		
 		while ((line = r.readLine()) != null)
 			try {
-			addToIndex(indexWriter, line);
-			} catch (IllegalArgumentException e) {
-				logger.info("Skipping... Error on line:" + line);
+				count += 1;
+				if (count % 100000 == 0 ) logger.info("rowcount: " + count);
+				addToIndex(indexWriter, line);
 			
+			} catch (Exception e) {
+				 logger.info("Skipping... Error on line:" + line);
+				 	
 			}
+
 		// add supplementary gazetteer records to index
+			 
 		while ((line = r2.readLine()) != null)
 			addToIndex(indexWriter, line);
 		
