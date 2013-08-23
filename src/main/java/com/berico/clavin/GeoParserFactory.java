@@ -241,7 +241,7 @@ public class GeoParserFactory {
 				reductionStrategy);
 		
 		// return the GeoParser.
-		return new GeoParser(locationExtractor, coordinateExtractor, resolver);
+		return new GeoParser(locationExtractor, coordinateExtractor, resolver, options);
 	}
 	
 	/**

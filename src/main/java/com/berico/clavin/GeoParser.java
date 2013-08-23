@@ -62,7 +62,10 @@ public class GeoParser {
 	
 	// resolver to match location names against gazetteer records
 	private LocationResolver resolver;
-	
+
+    //configuration for the resolver
+    private Options options;
+
 	/**
 	 * Initialize the GeoParse with its dependent interfaces.
 	 * @param locationExtractor Extract Locations from Text
@@ -74,11 +77,28 @@ public class GeoParser {
 			CoordinateExtractor coordinateExtractor, 
 			LocationResolver resolver){
 		
-		this.locationExtractor = locationExtractor;
-		this.coordinateExtractor = coordinateExtractor;
-		this.resolver = resolver;
+		this(locationExtractor, coordinateExtractor, resolver, new Options());
 	}
-	
+
+    /**
+    	 * Initialize the GeoParse with its dependent interfaces.
+    	 * @param locationExtractor Extract Locations from Text
+    	 * @param coordinateExtractor Extract Coordinates from Text
+    	 * @param resolver Resolve Locations and Coordinates.
+         * @param options Configuration for the components of the resolver
+    	 */
+    	public GeoParser(
+    			LocationExtractor locationExtractor,
+    			CoordinateExtractor coordinateExtractor,
+    			LocationResolver resolver,
+                Options options){
+
+    		this.locationExtractor = locationExtractor;
+    		this.coordinateExtractor = coordinateExtractor;
+    		this.resolver = resolver;
+            this.options = options;
+    	}
+
 	/**
 	 * Takes an unstructured text document (as a String), extracts the
 	 * location names contained therein, and resolves them into
@@ -110,7 +130,7 @@ public class GeoParser {
 		// then, resolve the extracted location names and coordinates against a
 		// gazetteer to produce geographic entities representing the
 		// locations mentioned in the original text
-		ResolutionContext resolutionContext = resolver.resolveLocations(extractionContext);
+		ResolutionContext resolutionContext = resolver.resolveLocations(extractionContext, options);
 		
 		logger.info("Resolved {} locations and {} coordinates.", 
 				resolutionContext.getLocations().size(),
