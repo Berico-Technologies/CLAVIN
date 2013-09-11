@@ -283,11 +283,11 @@ public enum CountryCode {
 	ZA("South Africa", 953987),
 	ZM("Zambia", 895949),
 	ZW("Zimbabwe", 878675),
-	CS("Serbia and Montenegro", Place.OUT_OF_BOUNDS), // no longer exists
-	AN("Netherlands Antilles", Place.OUT_OF_BOUNDS), // no longer exists
+	CS("Serbia and Montenegro", GeoName.OUT_OF_BOUNDS), // no longer exists
+	AN("Netherlands Antilles", GeoName.OUT_OF_BOUNDS), // no longer exists
 	
 	// manually added for locations not assigned to a specific country
-	NULL("No Man's Land", Place.OUT_OF_BOUNDS);
+	NULL("No Man's Land", GeoName.OUT_OF_BOUNDS);
 	
 	// country name
 	public final String name;
@@ -305,4 +305,5 @@ public enum CountryCode {
 		this.name = name;
 		this.geonameID = geonameID;
 	}
+	
 }

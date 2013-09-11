@@ -1,1 +1,0 @@
-## Building a Gazetteer Index From OpenStreetMap

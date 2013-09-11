@@ -1,8 +1,9 @@
 package com.berico.clavin.resolver;
 
-import com.berico.clavin.Options;
-import com.berico.clavin.extractor.ExtractionContext;
-import com.berico.clavin.extractor.LocationExtractor;
+import java.util.List;
+
+import com.berico.clavin.extractor.LocationOccurrence;
+import com.berico.clavin.gazetteer.GeoName;
 
 /*#####################################################################
  * 
@@ -44,30 +45,15 @@ import com.berico.clavin.extractor.LocationExtractor;
 public interface LocationResolver {
 	
 	/**
-	 * Resolves the locations and coordinates specified in the ExtractionContext
-	 * into a {@link ResolutionContext} which contains a list of {@link ResolvedLocation}s
-	 * and {@link ResolvedCoordinate}s.
-	 * 
-	 * @param extractionContext Information related to the extraction of 
-	 * locations and coordinates.
-	 * @return The results of resolving locations and coordinates.
-	 * @throws Exception
-	 */
-	 ResolutionContext resolveLocations(
-			ExtractionContext extractionContext) throws Exception;
-	
-	/**
-	 * Resolves the locations and coordinates specified in the ExtractionContext
-	 * into a {@link ResolutionContext} which contains a list of {@link ResolvedLocation}s
-	 * and {@link ResolvedCoordinate}s.
-	 * 
-	 * @param extractionContext Information related to the extraction of 
-	 * locations and coordinates.
-	 * @param options Options for configuring the underlying resolver.
-	 * @return The results of resolving locations and coordinates.
-	 * @throws Exception
-	 */
-	 ResolutionContext resolveLocations(
-			ExtractionContext extractionContext, Options options) throws Exception;
+     * Resolves the supplied list of location names into
+     * {@link ResolvedLocation}s containing {@link GeoName} objects.
+     * 
+     * @param locations 		list of location names to be resolved
+     * @param fuzzy			switch for turning on/off fuzzy matching
+     * @return 				list of {@link ResolvedLocation} objects
+     * @throws Exception 
+     **/
+	public List<ResolvedLocation> resolveLocations(
+			List<LocationOccurrence> locations, boolean fuzzy) throws Exception;
 	
 }

@@ -5,8 +5,6 @@ import static org.junit.Assert.*;
 import org.apache.lucene.search.similarities.DefaultSimilarity;
 import org.junit.Test;
 
-import com.berico.clavin.resolver.impl.lucene.BinarySimilarity;
-
 /*#####################################################################
  * 
  * CLAVIN (Cartographic Location And Vicinity INdexer)

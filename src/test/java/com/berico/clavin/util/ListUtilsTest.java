@@ -2,6 +2,8 @@ package com.berico.clavin.util;
 
 import static org.junit.Assert.*;
 
+import java.io.IOException;
+import java.security.InvalidParameterException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -71,6 +73,11 @@ public class ListUtilsTest {
 		
 		chunkedLists = chunkifyList(list, 6);
 		assertEquals("", lists5, chunkedLists);
+	}
+	
+	@Test(expected=InvalidParameterException.class)
+	public void testZeroChunk() throws IOException {
+		chunkifyList(null, 0);
 	}
 
 }

@@ -1,6 +1,11 @@
-package com.berico.clavin.extractor;
+package com.berico.clavin;
 
-import java.util.List;
+import static org.junit.Assert.assertEquals;
+
+import java.io.IOException;
+
+import org.apache.lucene.queryparser.classic.ParseException;
+import org.junit.Test;
 
 /*#####################################################################
  * 
@@ -26,22 +31,27 @@ import java.util.List;
  * 
  * ====================================================================
  * 
- * LocationExtractor.java
+ * GeoParserFactoryTest.java
  * 
  *###################################################################*/
 
 /**
- * Simple interface for location name extraction capabilities to be
- * provided by third-party named entity recognition tools.
+ * Checks output of  {@link GeoParserFactory}.
  *
  */
-public interface LocationExtractor {
+public class GeoParserFactoryTest {
 
 	/**
-	 * Extracts a list of location names found in unstructured text.
-	 * 
-	 * @param plainText		source of location names to be extracted
-	 * @return
+	 * Ensures GeoParserFactory is correctly instantiating the
+	 * {@link GeoParser} class.
+	 * @throws IOException
+	 * @throws ParseException
 	 */
-	public List<LocationOccurrence> extractLocationNames(String plainText);
+	@Test
+	public void testGetDefault() throws IOException, ParseException {
+		assertEquals("factory index", GeoParser.class, GeoParserFactory.getDefault("./IndexDirectory").getClass());
+		assertEquals("factory fuzzy", GeoParser.class, GeoParserFactory.getDefault("./IndexDirectory", true).getClass());
+		assertEquals("factory parameters", GeoParser.class, GeoParserFactory.getDefault("./IndexDirectory", 1, 1).getClass());
+	}
+
 }

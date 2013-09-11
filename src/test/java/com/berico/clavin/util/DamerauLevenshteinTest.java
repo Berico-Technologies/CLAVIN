@@ -118,7 +118,7 @@ public class DamerauLevenshteinTest {
 	 * ensure we're keeping consistent with damerauLevenshteinDistance().
 	 */
 	@Test
-	public void testIsEditDistanceBound() {
+	public void testIsEditDistance1() {
 		String a = null; String b = null;
 		assertTrue("both null", isEditDistance1(a, b));
 		
@@ -136,6 +136,12 @@ public class DamerauLevenshteinTest {
 		
 		a = "x"; b = "";
 		assertTrue("second empty", isEditDistance1(a, b));
+		
+		a = null; b = "xyz";
+		assertFalse("first null, second long", isEditDistance1(a, b));
+		
+		a = "xyz"; b = null;
+		assertFalse("second null, first long", isEditDistance1(a, b));
 		
 		a = "x"; b = "x";
 		assertTrue("short same", isEditDistance1(a, b));
@@ -247,6 +253,16 @@ public class DamerauLevenshteinTest {
 				assertTrue("consistent with true DL", isEditDistance1(a, b));
 			else assertFalse("consistent with true DL", isEditDistance1(a, b));
 		}	
+	}
+	
+	/**
+	 * Maximize test coverage by checking toString() method of inner
+	 * Null class.
+	 */
+	@Test
+	public void testNullToString() {
+		Null myNull = new Null();
+		assertTrue("Null class toString() not \"Null\"", myNull.toString().equals("Null"));
 	}
 	
 	/**

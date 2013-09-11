@@ -8,9 +8,7 @@
     </encoder>
   </appender>
    
-  <logger name="com.berico.clavin" level="DEBUG" />
-   
-  <root level="INFO">
+  <root level="ALL">
     <appender-ref ref="STDOUT" />
   </root>
 </configuration>

@@ -1,7 +1,11 @@
 package com.berico.clavin.resolver;
 
 import com.berico.clavin.extractor.LocationOccurrence;
-import com.berico.clavin.gazetteer.Place;
+import org.apache.lucene.document.Document;
+
+import com.berico.clavin.gazetteer.GeoName;
+
+import static com.berico.clavin.util.DamerauLevenshtein.damerauLevenshteinDistanceCaseInsensitive;
 
 /*#####################################################################
  * 
@@ -35,145 +39,79 @@ import com.berico.clavin.gazetteer.Place;
  * Object produced by resolving a location name against gazetteer
  * records.
  * 
- * Encapsulates a {@link Place} object representing the best match
- * between a given location name and gazetteer record, along with some
+ * Encapsulates a {@link GeoName} object representing the best match
+ * between a given location name and gazetter record, along with some
  * information about the geographic entity resolution process.
+ *
  */
 public class ResolvedLocation {
 	
 	// geographic entity resolved from location name
-	protected Place place;
+	public GeoName geoname;
 	
 	// original location name extracted from text
-	protected LocationOccurrence location;
+	public LocationOccurrence location;
 	
 	// name from gazetteer record that the inputName was matched against
-	protected String matchedName;
+	public String matchedName;
 	
 	// whether fuzzy matching was used
-	protected boolean fuzzy;
+	public boolean fuzzy;
 	
 	// confidence score for resolution
-	protected float confidence;
+	public float confidence;
 	
 	/**
-	 * For serialization purposes, don't use directly.
-	 */
-	public ResolvedLocation(){}
-	
-	/**
-	 * Represents a {@link ResolvedLocation} mapping to an extracted plain-nammed location
-	 * found in a document.
+	 * Builds a {@link ResolvedLocation} from a document retrieved from
+	 * the Lucene index representing the geographic entity resolved
+	 * from a location name.
 	 * 
-	 * @param matchedName Name of the location that was matched by the extracted text.
-	 * @param place The resolved place.
-	 * @param location Context of the extraction (text and position)
-	 * @param fuzzy Whether fuzzy matching was applied.
-	 * @param confidence Confidence of the match.
+	 * @param luceneDoc		document from Lucene index representing a gazetteer record
 	 */
-	public ResolvedLocation(
-			String matchedName,
-			Place place, 
-			LocationOccurrence location, 
-			boolean fuzzy,
-			float confidence){
+	public ResolvedLocation(Document luceneDoc, LocationOccurrence location, boolean fuzzy) {
 		
-		this.matchedName = matchedName;
-		this.place = place;
+		// instantiate a GeoName object from the gazetteer record
+		this.geoname = GeoName.parseFromGeoNamesRecord(luceneDoc.get("geoname"));
+		
 		this.location = location;
+		
+		// get the name in the Lucene document matched to the given
+		// location name extracted from the text
+		this.matchedName = luceneDoc.get("indexName");
+		
 		this.fuzzy = fuzzy;
-		this.confidence = confidence;
+		
+		// for fuzzy matches, confidence is based on the edit distance
+		// between the given location name and the matched name
+		if (fuzzy)
+			this.confidence = 1 / (damerauLevenshteinDistanceCaseInsensitive(location.name, matchedName) + (float)0.5);
+		else this.confidence = 1; // exact String match
+		/// TODO: fix this confidence score... it doesn't fully make sense
 	}
 	
 	/**
-	 * Get the Place entry for this resolved location.
-	 * @return Place entry
+	 * Tests equivalence between {@link ResolvedLocation} objects.
+	 * 
+	 * @param obj	the other object being compared against
 	 */
-	public Place getPlace() {
-		return place;
-	}
-
-	/**
-	 * Get the context of the extracted location.
-	 * @return Occurrence of the extracted location in text.
-	 */
-	public LocationOccurrence getLocation() {
-		return location;
-	}
-
-	/**
-	 * Get the name matching the extracted location found by the resolver.
-	 * @return Name resolved used to match this entry.
-	 */
-	public String getMatchedName() {
-		return matchedName;
-	}
-
-	/**
-	 * Was fuzzy matching used to select this location?
-	 * @return true if fuzzy matching was used.
-	 */
-	public boolean isFuzzy() {
-		return fuzzy;
-	}
-
-	/**
-	 * Get the confidence of the match.
-	 * @return Confidence of the match between the matched name and the text occurring
-	 * in the document.
-	 */
-	public float getConfidence() {
-		return confidence;
-	}
-
-	
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + Float.floatToIntBits(confidence);
-		result = prime * result + (fuzzy ? 1231 : 1237);
-		result = prime * result
-				+ ((location == null) ? 0 : location.hashCode());
-		result = prime * result
-				+ ((matchedName == null) ? 0 : matchedName.hashCode());
-		result = prime * result + ((place == null) ? 0 : place.hashCode());
-		return result;
-	}
-
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		ResolvedLocation other = (ResolvedLocation) obj;
-		if (Float.floatToIntBits(confidence) != Float
-				.floatToIntBits(other.confidence))
-			return false;
-		if (fuzzy != other.fuzzy)
-			return false;
-		if (location == null) {
-			if (other.location != null)
-				return false;
-		} else if (!location.equals(other.location))
-			return false;
-		if (matchedName == null) {
-			if (other.matchedName != null)
-				return false;
-		} else if (!matchedName.equals(other.matchedName))
-			return false;
-		if (place == null) {
-			if (other.place != null)
-				return false;
-		} else if (!place.equals(other.place))
-			return false;
-		return true;
+	    if (obj == this) return true;
+	    if (obj == null) return false;
+	    
+	    // only a ResolvedLocation can equal a ResolvedLocation
+	    if (this.getClass() != obj.getClass()) return false;
+	    
+	    // cast the other object into a ResolvedLocation, now that we
+	    // know that it is one
+	    ResolvedLocation other = (ResolvedLocation)obj;
+	    
+	    // as long as the geonameIDs are the same, we'll treat these
+	    // ResolvedLocations as equal since they point to the same
+	    // geographic entity (even if the circumstances of the entity
+	    // resolution process differed)
+	    return (this.geoname.geonameID == other.geoname.geonameID);
 	}
-	
-	private static final char dblquote = '"';
 	
 	/**
 	 * For pretty-printing.
@@ -181,24 +119,6 @@ public class ResolvedLocation {
 	 */
 	@Override
 	public String toString() {
-		
-		StringBuilder sb = new StringBuilder();
-		
-		sb.append("Resolved ")
-		  // Text
-		  .append(dblquote).append(location.getText()).append(dblquote).append(" ")
-		  .append("as")
-		  // Matched Name
-		  .append(dblquote).append(matchedName).append(dblquote).append(" ")
-		  // Place
-		  .append("{ ").append(place).append("}, ")
-		  // Position in Document
-		  .append("position: ").append(location.getPosition()).append(", ")
-		  // Confidence
-		  .append("confidence: ").append(confidence).append(", ")
-		  // Fuzziness
-		  .append("fuzzy: ").append(fuzzy);
-		
-		return sb.toString();
+		return "Resolved \"" + location.name + "\" as: \"" + matchedName + "\" {" + geoname + "}, position:" + location.position + ", confidence: " + confidence + ", fuzzy: " + fuzzy;
 	}
 }

@@ -83,7 +83,7 @@ public class ListUtils {
 		
 		// take whatever's left, split it into two relatively-equal
 		// chunks, and add these to the return object
-		count = index + (list.size() - index) / 2;
+		count = index + ((list.size() - index) / 2);
 		chunkedLists.add(list.subList(index, count));
 		chunkedLists.add(list.subList(count, list.size()));
 		

@@ -14,16 +14,23 @@ How to build & use CLAVIN:
 2. Move into the newly-created CLAVIN directory:
 	> `cd CLAVIN`
 
-3. Create the Index from the Geonames Gazetteer:
-    > `sh scripts/build-geonames-index.sh`
+3. Download the latest version of allCountries.zip gazetteer file from GeoNames.org:
+	> `curl http://download.geonames.org/export/dump/allCountries.zip -o allCountries.zip`
 
-4. Have a brew or two.  Index creation takes a while (15-30 minutes).
+4. Unzip the GeoNames gazetteer file:
+	> `unzip allCountries.zip`
 
-5. Build the CLAVIN package:
+5. Compile the source code:
+	> `mvn compile`
+
+6. Create the Lucene Index (this one-time process will take several minutes):
+	> `MAVEN_OPTS="-Xmx2048M" mvn exec:java -Dexec.mainClass="com.berico.clavin.index.IndexDirectoryBuilder"`
+
+7. Build the CLAVIN package:
 	> `mvn package`
 
-6. Run the example program:
-	> `mvn exec:java -Dexec.mainClass="com.berico.clavin.examples.WorkflowDemo" -Dexec.args="-Xmx2g"`
+8. Run the example program:
+	> `MAVEN_OPTS="-Xmx2048M" mvn exec:java -Dexec.mainClass="com.berico.clavin.WorkflowDemo"`
 	
 	If you encounter an error that looks like this:
 	> `... InvocationTargetException: Java heap space ...`
@@ -57,7 +64,7 @@ CLAVIN from Berico's Nexus Repo:
 <dependency>
    <groupId>com.berico</groupId>
    <artifactId>clavin</artifactId>
-   <version>0.4.2</version>
+   <version>0.3.1</version>
 </dependency>
 ```
 

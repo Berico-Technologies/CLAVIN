@@ -1,6 +1,9 @@
-package com.berico.clavin.extractor;
+package com.berico.clavin.index;
 
-import java.util.List;
+import java.io.Reader;
+
+import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.util.Version;
 
 /*#####################################################################
  * 
@@ -26,22 +29,36 @@ import java.util.List;
  * 
  * ====================================================================
  * 
- * LocationExtractor.java
+ * WhitespaceLowerCaseAnalyzer.java
  * 
  *###################################################################*/
 
 /**
- * Simple interface for location name extraction capabilities to be
- * provided by third-party named entity recognition tools.
- *
+ * A Lucene Analyzer that filters WhitespaceTokenizer with
+ * LowerCaseFilter.
+ * 
  */
-public interface LocationExtractor {
-
+public class WhitespaceLowerCaseAnalyzer extends Analyzer {
+	
+	// Lucene v4.0-BETA offers a nice speed increase over v3.6.1 in
+	// terms of fuzzy search
+	private final static Version matchVersion = Version.LUCENE_40;
+	
 	/**
-	 * Extracts a list of location names found in unstructured text.
+	 * Simple default constructor for
+	 * {@link WhitespaceLowerCaseAnalyzer}.
 	 * 
-	 * @param plainText		source of location names to be extracted
-	 * @return
 	 */
-	public List<LocationOccurrence> extractLocationNames(String plainText);
+	public WhitespaceLowerCaseAnalyzer() {}
+	
+	/**
+	 * Provides tokenizer access for the analyzer.
+	 * 
+	 * @param fieldName		field to be tokenized
+	 * @param reader
+	 */
+	@Override
+	protected TokenStreamComponents createComponents(final String fieldName, final Reader reader) {
+		return new TokenStreamComponents(new WhitespaceLowerCaseTokenizer(matchVersion, reader));
+	}
 }

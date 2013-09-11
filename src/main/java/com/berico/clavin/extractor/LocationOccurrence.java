@@ -36,95 +36,44 @@ package com.berico.clavin.extractor;
  * 
  */
 public class LocationOccurrence {
-	
-	
 	// text of location name
-    protected String text;
+    public final String name;
     
     // number of UTF-16 code points from the start of the document at
     // which the location name starts
-    protected long position;
+    // TODO: really? UFT16? not UTF8?
+    public final int position;
 
     /**
-     * For serialization purposes; please use the parameterized constructor.
-     */
-    public LocationOccurrence(){}
-    
-    /**
-     * Construction for {@link LocationOccurrence} class.
+     * Sole construction for {@link LocationOccurrence} class.
      * 
      * Represents a location name found in a document.
      * 
      * @param text		text of the location name
      * @param position	where it was found
      */
-	public LocationOccurrence(String text, long position) {
-		this.text = text;
-		
-		assert position >= 0;
-		
-		this.position = position;
-	}
-
-	/**
-	 * Get the extracted location text.
-	 * @return Extracted location
-	 */
-	public String getText() {
-		return text;
-	}
-
-	/**
-	 * Get the position in the document in which the text was extracted.
-	 * @return Position in text of the extracted location.
-	 */
-	public long getPosition() {
-		return position;
-	}
-	
-	/**
-	 * Get the ending position in the document of the extracted location.
-	 * @return End position of the extracted location.
-	 */
-	public long getEndPosition(){
-		
-		return position + text.length();
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + (int) (position ^ (position >>> 32));
-		result = prime * result + ((text == null) ? 0 : text.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		LocationOccurrence other = (LocationOccurrence) obj;
-		if (position != other.position)
-			return false;
-		if (text == null) {
-			if (other.text != null)
-				return false;
-		} else if (!text.equals(other.text))
-			return false;
-		return true;
-	}
+    public LocationOccurrence(String text, int position) {
+        this.name = text;
+        this.position = position;
+    }
 
     @Override
-    public String toString(){
-    	
-    		return String.format("LocationOccurrence: [%s] at position %s.", this.text, this.position);
-    }
-    
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-    
+        LocationOccurrence that = (LocationOccurrence) o;
+
+        if (position != that.position) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + position;
+        return result;
+    }
 }
