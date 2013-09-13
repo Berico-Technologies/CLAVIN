@@ -24,13 +24,13 @@ How to build & use CLAVIN:
 	> `mvn compile`
 
 6. Create the Lucene Index (this one-time process will take several minutes):
-	> `MAVEN_OPTS="-Xmx2048M" mvn exec:java -Dexec.mainClass="com.berico.clavin.index.IndexDirectoryBuilder"`
+	> `MAVEN_OPTS="-Xmx2048M" mvn exec:java -Dexec.mainClass="com.bericotech.clavin.index.IndexDirectoryBuilder"`
 
 7. Build the CLAVIN package:
 	> `mvn package`
 
 8. Run the example program:
-	> `MAVEN_OPTS="-Xmx2048M" mvn exec:java -Dexec.mainClass="com.berico.clavin.WorkflowDemo"`
+	> `MAVEN_OPTS="-Xmx2048M" mvn exec:java -Dexec.mainClass="com.bericotech.clavin.WorkflowDemo"`
 	
 	If you encounter an error that looks like this:
 	> `... InvocationTargetException: Java heap space ...`
@@ -62,9 +62,9 @@ CLAVIN from Berico's Nexus Repo:
 
 ```xml
 <dependency>
-   <groupId>com.berico</groupId>
+   <groupId>com.bericotech</groupId>
    <artifactId>clavin</artifactId>
-   <version>0.3.1</version>
+   <version>1.0.0rc2</version>
 </dependency>
 ```
 
