@@ -177,7 +177,7 @@ public class IndexDirectoryBuilder {
   	 * @param geonameEntry	string from GeoNames gazetteer
   	 * @param geonameID		unique identifier (for quick look-up)
   	 * @param population	number of inhabitants (used for scoring)
-  	 * @return
+  	 * @return 				document to be added to the index
   	 */
   	public static Document buildDoc(String name, String geonameEntry, int geonameID, Long population) {
   		

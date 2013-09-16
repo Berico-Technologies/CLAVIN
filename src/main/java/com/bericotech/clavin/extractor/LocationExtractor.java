@@ -41,7 +41,7 @@ public interface LocationExtractor {
 	 * Extracts a list of location names found in unstructured text.
 	 * 
 	 * @param plainText		source of location names to be extracted
-	 * @return
+	 * @return 				list of location occurrences
 	 */
 	public List<LocationOccurrence> extractLocationNames(String plainText);
 }

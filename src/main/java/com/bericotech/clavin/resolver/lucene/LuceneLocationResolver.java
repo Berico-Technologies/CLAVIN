@@ -62,7 +62,7 @@ import com.bericotech.clavin.util.ListUtils;
  * Resolves location names into GeoName objects.
  * 
  * Takes location names extracted from unstructured text documents by
- * {@link LocationExtractor} and resolves them into the appropriate
+ * {@link com.bericotech.clavin.extractor.LocationExtractor} and resolves them into the appropriate
  * geographic entities (as intended by the document's author based on
  * context) by finding the best match in a gazetteer.
  * 
@@ -308,7 +308,7 @@ public class LuceneLocationResolver implements LocationResolver {
   	
   	/**
   	 * Recursive helper function for
-  	 * {@link LocationResolver#pickBestCandidates(List<List<ResolvedLocation>>)}.
+  	 * {@link #pickBestCandidates}.
   	 * 
   	 * Generates all combinations of candidate matches from each
   	 * location, down to the specified depth through the lists.
@@ -357,12 +357,12 @@ public class LuceneLocationResolver implements LocationResolver {
   	
     /**
      * Resolves the supplied list of location names into
-     * {@link ResolvedLocation}s containing {@link GeoName} objects.
+     * {@link ResolvedLocation}s containing {@link com.bericotech.clavin.gazetteer.GeoName} objects.
      * 
-     * Calls {@link LuceneLocationResolver#getCandidateMatches(LocationOccurrence, boolean)} on
+     * Calls {@link LuceneLocationResolver#getCandidateMatches} on
      * each location name to find all possible matches, then uses
      * heuristics to select the best match for each by calling
-     * {@link LocationResolver#pickBestCandidates(List<List<ResolvedLocation>>)}.
+     * {@link LuceneLocationResolver#pickBestCandidates}.
      * 
      * @param locations 		list of location names to be resolved
      * @param fuzzy				switch for turning on/off fuzzy matching

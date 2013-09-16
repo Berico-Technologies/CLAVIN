@@ -117,7 +117,7 @@ public class DamerauLevenshtein {
 	}
 	
 	/**
-	 * Convenience method for calling {@link damerauLevenshteinDistance(String str1, String str2)}
+	 * Convenience method for calling {@link #damerauLevenshteinDistance(String str1, String str2)}
 	 * when you don't care about case sensitivity.
 	 * 
 	 * @param str1	First string being compared
@@ -133,10 +133,10 @@ public class DamerauLevenshtein {
 	 * distance between two strings is less than 2.
 	 * 
 	 * Returns as quick as possibly by stopping once multiple edits are
-	 * found. Significantly faster than {@link damerauLevenshteinDistance(String str1, String str2)}
+	 * found. Significantly faster than {@link #damerauLevenshteinDistance(String str1, String str2)}
 	 * which explores every path between every string to get the exact
 	 * edit distance. Despite the speed boost, we maintain consistency
-	 * with {@link damerauLevenshteinDistance(String str1, String str2)}.
+	 * with {@link #damerauLevenshteinDistance(String str1, String str2)}.
 	 * 
 	 * @param str1	First string being compared
 	 * @param str2	Second string being compared

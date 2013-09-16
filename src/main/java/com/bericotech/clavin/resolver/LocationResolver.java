@@ -37,7 +37,7 @@ import com.bericotech.clavin.gazetteer.GeoName;
  * Resolves location names into GeoName objects.
  * 
  * Takes location names extracted from unstructured text documents by
- * {@link LocationExtractor} and resolves them into the appropriate
+ * {@link com.bericotech.clavin.extractor.LocationExtractor} and resolves them into the appropriate
  * geographic entities (as intended by the document's author based on
  * context) by finding the best match in a gazetteer.
  * 
