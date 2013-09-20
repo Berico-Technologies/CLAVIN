@@ -1,2 +1,3 @@
 language: java
 script: ./script/ci/run_build.sh
+install: mvn install -DskipTests=true -Dgpg.skip=true
