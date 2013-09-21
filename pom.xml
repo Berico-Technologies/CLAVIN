@@ -110,7 +110,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
-        <version>2.3</version>
+        <version>2.4</version>
         <executions>
           <execution>
             <id>make-assembly</id>
@@ -144,6 +144,18 @@
             </goals>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+	    <groupId>org.apache.maven.plugins</groupId>
+		<artifactId>maven-site-plugin</artifactId>
+		<version>3.2</version>
+		<dependencies>
+          <dependency>
+            <groupId>org.apache.maven.doxia</groupId>
+			<artifactId>doxia-module-markdown</artifactId>
+            <version>1.4</version>
+          </dependency>
+        </dependencies>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -246,17 +258,5 @@
     </pluginRepository>
   </pluginRepositories>
   
-  <!--  
-  <distributionManagement>
-      <repository>
-          <id>nexus.bericotechnologies.com</id>
-          <url>http://nexus.bericotechnologies.com/content/repositories/releases/</url>
-      </repository>
-      <snapshotRepository>
-          <id>nexus.bericotechnologies.com</id>
-          <url>http://nexus.bericotechnologies.com/content/repositories/snapshots/</url>
-      </snapshotRepository>
-  </distributionManagement>
-  -->
   
 </project>
