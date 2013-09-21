@@ -14,16 +14,23 @@ How to build & use CLAVIN:
 2. Move into the newly-created CLAVIN directory:
 	> `cd CLAVIN`
 
-3. Create the Index from the Geonames Gazetteer:
-    > `sh scripts/build-geonames-index.sh`
+3. Download the latest version of allCountries.zip gazetteer file from GeoNames.org:
+	> `curl http://download.geonames.org/export/dump/allCountries.zip -o allCountries.zip`
 
-4. Have a brew or two.  Index creation takes a while (15-30 minutes).
+4. Unzip the GeoNames gazetteer file:
+	> `unzip allCountries.zip`
 
-5. Build the CLAVIN package:
+5. Compile the source code:
+	> `mvn compile`
+
+6. Create the Lucene Index (this one-time process will take several minutes):
+	> `MAVEN_OPTS="-Xmx2048M" mvn exec:java -Dexec.mainClass="com.bericotech.clavin.index.IndexDirectoryBuilder"`
+
+7. Build the CLAVIN package:
 	> `mvn package`
 
-6. Run the example program:
-	> `mvn exec:java -Dexec.mainClass="com.berico.clavin.examples.WorkflowDemo" -Dexec.args="-Xmx2g"`
+8. Run the example program:
+	> `MAVEN_OPTS="-Xmx2048M" mvn exec:java -Dexec.mainClass="com.bericotech.clavin.WorkflowDemo"`
 	
 	If you encounter an error that looks like this:
 	> `... InvocationTargetException: Java heap space ...`
@@ -34,30 +41,13 @@ Once that all runs successfully, feel free to modify the CLAVIN source code to s
 
 **N.B.**: Loading the worldwide gazetteer uses a non-trivial amount of memory. When using CLAVIN in your own programs, if you encounter `Java heap space` errors (like the one described in Step 8), bump up the maximum heap size for your JVM. Allocating 2GB (e.g., `-Xmx2g`) is a good place to start.
 
-CLAVIN from Berico's Nexus Repo:
---------------------------------
-
-* Reference the Berico Technologies Nexus Repository in your Maven `pom.xml`:
-
-```xml
-<repositories>
-  <repository>
-     <id>nexus.bericotechnologies.com</id>
-     <name>Berico Technologies Nexus</name>
-     <url>http://nexus.bericotechnologies.com/content/groups/public</url>
-     <releases><enabled>true</enabled></releases>
-     <snapshots><enabled>true</enabled></snapshots>
-  </repository>
-</repositories>
-```
-
 * Add a dependency on the CLAVIN project:
 
 ```xml
 <dependency>
-   <groupId>com.berico</groupId>
+   <groupId>com.bericotech</groupId>
    <artifactId>clavin</artifactId>
-   <version>0.4.2</version>
+   <version>1.0.0rc4</version>
 </dependency>
 ```
 
