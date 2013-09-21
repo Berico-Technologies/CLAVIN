@@ -78,12 +78,21 @@ public class IndexDirectoryBuilder {
 	 */
 	public static void main(String[] args) throws IOException {
 		
+
+		
+		// exit gracefully if the directory exists 
+		File idir = new File("./IndexDirectory");
+		if (idir.exists() ) {
+			logger.info("IndexDirectory exists. Remove the directory and try again.");
+			System.exit(-1);
+		}
+		
 		logger.info("Indexing... please wait.");
 		
 		// Create a new index file on disk, allowing Lucene to choose
 		// the best FSDirectory implementation given the environment.
-		// TODO: delete this directory first, if it exists
-		FSDirectory index = FSDirectory.open(new File("./IndexDirectory"));
+		
+		FSDirectory index = FSDirectory.open(idir);
 		
 		// indexing by lower-casing & tokenizing on whitespace
 		Analyzer indexAnalyzer = new WhitespaceLowerCaseAnalyzer();
