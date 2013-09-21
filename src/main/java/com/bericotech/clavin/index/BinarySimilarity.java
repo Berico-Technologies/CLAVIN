@@ -55,7 +55,7 @@ public class BinarySimilarity extends DefaultSimilarity {
     public float tf(float freq) {
         if (freq > 0)
         	return 1.0f;
-        else return freq;
+        else return 0.0f;
     }
 
 }

@@ -89,13 +89,13 @@ public class ApacheExtractor implements LocationExtractor {
 
         List<LocationOccurrence> nerResults = new ArrayList<LocationOccurrence>();
 
-        //First step: find the start and end position of each sentence in the document.
-        //each sentence gets processed on its own.
-        //the values used in these Spans are string character offsets
+        // The values used in these Spans are string character offsets
         Span sentenceSpans[] = sentenceDetector.sentPosDetect(plainText);
 
+        // Each sentence gets processed on its own
         for (Span sentenceSpan : sentenceSpans) {
 
+        	// find the start and end position of this sentence in the document
             String sentence = plainText.substring(sentenceSpan.getStart(), sentenceSpan.getEnd());
 
             // tokenize the text into the required OpenNLP format
@@ -123,6 +123,7 @@ public class ApacheExtractor implements LocationExtractor {
                 //look back into the original input string to figure out what the text is that I got a hit on
                 String nameInDocument = plainText.substring(startOffsetInDoc, endOffsetInDoc);
 
+                // add to List of results to return
                 nerResults.add(new LocationOccurrence(nameInDocument, startOffsetInDoc));
             }
 

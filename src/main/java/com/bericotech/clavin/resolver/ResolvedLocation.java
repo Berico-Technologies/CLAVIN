@@ -45,7 +45,6 @@ import static com.bericotech.clavin.util.DamerauLevenshtein.damerauLevenshteinDi
  *
  */
 public class ResolvedLocation {
-	
 	// geographic entity resolved from location name
 	public GeoName geoname;
 	
@@ -69,7 +68,6 @@ public class ResolvedLocation {
 	 * @param luceneDoc		document from Lucene index representing a gazetteer record
 	 */
 	public ResolvedLocation(Document luceneDoc, LocationOccurrence location, boolean fuzzy) {
-		
 		// instantiate a GeoName object from the gazetteer record
 		this.geoname = GeoName.parseFromGeoNamesRecord(luceneDoc.get("geoname"));
 		

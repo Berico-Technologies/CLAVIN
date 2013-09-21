@@ -3,7 +3,7 @@
   
   <groupId>com.bericotech</groupId>
   <artifactId>clavin</artifactId>
-  <version>1.0.0rc4</version>
+  <version>1.0.0rc5</version>
   <packaging>jar</packaging>
   
   <parent>
@@ -75,9 +75,6 @@
       <name>Berico Technologies</name>
       <url>http://www.bericotechnologies.com</url>
   </organization>
-
-
-
 
   <build>
     <plugins>

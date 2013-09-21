@@ -39,9 +39,8 @@ public class LocationOccurrence {
 	// text of location name
     public final String name;
     
-    // number of UTF-16 code points from the start of the document at
+    // number of UTF-16 code units from the start of the document at
     // which the location name starts
-    // TODO: really? UFT16? not UTF8?
     public final int position;
 
     /**
@@ -57,6 +56,11 @@ public class LocationOccurrence {
         this.position = position;
     }
 
+    /**
+     * Tests equivalence based on name and position.
+     * 
+     * @param o		Object to compare this against
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -70,6 +74,9 @@ public class LocationOccurrence {
         return true;
     }
 
+    /**
+     * Required for hashing.
+     */
     @Override
     public int hashCode() {
         int result = name != null ? name.hashCode() : 0;

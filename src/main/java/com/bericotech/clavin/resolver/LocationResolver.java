@@ -48,12 +48,11 @@ public interface LocationResolver {
      * Resolves the supplied list of location names into
      * {@link ResolvedLocation}s containing {@link GeoName} objects.
      * 
-     * @param locations 		list of location names to be resolved
+     * @param locations 	list of location names to be resolved
      * @param fuzzy			switch for turning on/off fuzzy matching
      * @return 				list of {@link ResolvedLocation} objects
      * @throws Exception 
      **/
 	public List<ResolvedLocation> resolveLocations(
 			List<LocationOccurrence> locations, boolean fuzzy) throws Exception;
-	
 }

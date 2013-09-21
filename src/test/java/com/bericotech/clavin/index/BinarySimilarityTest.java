@@ -45,9 +45,11 @@ public class BinarySimilarityTest {
 	@Test
 	public void testTF() {
 		DefaultSimilarity sim = new BinarySimilarity();
-		assertEquals("Not yet implemented", 1, (int)Math.round(sim.tf(2)));
-		assertEquals("Not yet implemented", 1, (int)Math.round(sim.tf(1)));
-		assertEquals("Not yet implemented", 0, (int)Math.round(sim.tf(0)));
+		assertEquals("big positive number", 1, (int)Math.round(sim.tf(999)));
+		assertEquals("slightly more than 1", 1, (int)Math.round(sim.tf(2)));
+		assertEquals("just 1", 1, (int)Math.round(sim.tf(1)));
+		assertEquals("slightly less than 1", 0, (int)Math.round(sim.tf(0)));
+		assertEquals("big negative number", 0, (int)Math.round(sim.tf(-999)));
 	}
 
 }

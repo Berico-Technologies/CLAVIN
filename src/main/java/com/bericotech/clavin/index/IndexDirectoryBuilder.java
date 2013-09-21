@@ -78,8 +78,6 @@ public class IndexDirectoryBuilder {
 	 */
 	public static void main(String[] args) throws IOException {
 		
-
-		
 		// exit gracefully if the directory exists 
 		File idir = new File("./IndexDirectory");
 		if (idir.exists() ) {
@@ -91,7 +89,6 @@ public class IndexDirectoryBuilder {
 		
 		// Create a new index file on disk, allowing Lucene to choose
 		// the best FSDirectory implementation given the environment.
-		
 		FSDirectory index = FSDirectory.open(idir);
 		
 		// indexing by lower-casing & tokenizing on whitespace
@@ -110,22 +107,18 @@ public class IndexDirectoryBuilder {
 		Date start = new Date();
 		
 		// load GeoNames gazetteer into Lucene index
-		
 		int count = 0;
-		
 		while ((line = r.readLine()) != null)
 			try {
 				count += 1;
+				// print progress update to console
 				if (count % 100000 == 0 ) logger.info("rowcount: " + count);
 				addToIndex(indexWriter, line);
-			
 			} catch (Exception e) {
 				 logger.info("Skipping... Error on line:" + line);
-				 	
 			}
 
 		// add supplementary gazetteer records to index
-			 
 		while ((line = r2.readLine()) != null)
 			addToIndex(indexWriter, line);
 		
@@ -158,7 +151,6 @@ public class IndexDirectoryBuilder {
 	 * @throws IOException
 	 */
   	private static void addToIndex(IndexWriter indexWriter, String geonameEntry) throws IOException {
-  		
   		// create a GeoName object from a single gazetteer record
   		GeoName geoname = GeoName.parseFromGeoNamesRecord(geonameEntry);
   		
@@ -189,9 +181,8 @@ public class IndexDirectoryBuilder {
   	 * @return 				document to be added to the index
   	 */
   	public static Document buildDoc(String name, String geonameEntry, int geonameID, Long population) {
-  		
   		// in case you're wondering, yes, this is a non-standard use of
-  		// the Lucene Document construct
+  		// the Lucene Document construct :)
 	    Document doc = new Document();
 	    
 	    // this is essentially the key we'll try to match location

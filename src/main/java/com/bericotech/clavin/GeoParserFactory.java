@@ -46,10 +46,12 @@ import com.bericotech.clavin.resolver.lucene.LuceneLocationResolver;
 public class GeoParserFactory {
 	
 	/**
-	 * Get the default GeoParser.
-	 * @param pathToLuceneIndex Path to the local Lucene index.
-	 * @return GeoParser
-	 * @throws IOException If file isn't found or can't be read.
+	 * Get the default GeoParser, with maxHitDepth and maxContentWindow
+	 * both set to 1, and fuzzy matching turned off.
+	 * 
+	 * @param pathToLuceneIndex		Path to the local Lucene index.
+	 * @return 						GeoParser
+	 * @throws IOException			If file isn't found or can't be read.
 	 * @throws ParseException
 	 */
 	public static GeoParser getDefault(String pathToLuceneIndex) 
@@ -59,11 +61,12 @@ public class GeoParserFactory {
 	}
 	
 	/**
-	 * Get the default GeoParser.
-	 * @param pathToLuceneIndex Path to the local Lucene index.
-	 * @param fuzzy Should fuzzy matching be used?
-	 * @return GeoParser
-	 * @throws IOException If file isn't found or can't be read.
+	 * Get a GeoParser with fuzzy matching explicitly turned on or off.
+	 * 
+	 * @param pathToLuceneIndex		Path to the local Lucene index.
+	 * @param fuzzy 				Should fuzzy matching be used?
+	 * @return 						GeoParser
+	 * @throws IOException 			If file isn't found or can't be read.
 	 * @throws ParseException
 	 */
 	public static GeoParser getDefault(
@@ -74,12 +77,14 @@ public class GeoParserFactory {
 	}
 	
 	/**
-	 * Get the default GeoParser.
-	 * @param pathToLuceneIndex Path to the local Lucene index.
-	 * @param maxHitDepth Number of candidate matches to consider
-	 * @param maxContentWindow How much context to consider when resolving
-	 * @return GeoParser
-	 * @throws IOException If file isn't found or can't be read.
+	 * Get a GeoParser with defined values for maxHitDepth and
+	 * maxContentWindow.
+	 * 
+	 * @param pathToLuceneIndex 	Path to the local Lucene index.
+	 * @param maxHitDepth 			Number of candidate matches to consider
+	 * @param maxContentWindow 		How much context to consider when resolving
+	 * @return 						GeoParser
+	 * @throws IOException 			If file isn't found or can't be read.
 	 * @throws ParseException
 	 */
 	public static GeoParser getDefault(
@@ -90,39 +95,46 @@ public class GeoParserFactory {
 	}
 	
 	/**
-	 * Get the default GeoParser.
-	 * @param pathToLuceneIndex Path to the local Lucene index.
-	 * @param maxHitDepth Number of candidate matches to consider
-	 * @param maxContentWindow How much context to consider when resolving
-	 * @param fuzzy Should fuzzy matching be used?
-	 * @return GeoParser
-	 * @throws IOException If file isn't found or can't be read.
+	 * Get a GeoParser with defined values for maxHitDepth and
+	 * maxContentWindow, and fuzzy matching explicitly turned on or off.
+	 * 
+	 * @param pathToLuceneIndex 	Path to the local Lucene index.
+	 * @param maxHitDepth 			Number of candidate matches to consider
+	 * @param maxContentWindow 		How much context to consider when resolving
+	 * @param fuzzy 				Should fuzzy matching be used?
+	 * @return 						GeoParser
+	 * @throws IOException 			If file isn't found or can't be read.
 	 * @throws ParseException
 	 */
 	public static GeoParser getDefault(
 			String pathToLuceneIndex, int maxHitDepth, int maxContentWindow, boolean fuzzy) 
 					throws IOException, ParseException{
 		
+		// instantiate default LocationExtractor
 		LocationExtractor extractor = new ApacheExtractor();
 		
 		return getDefault(pathToLuceneIndex, extractor, maxHitDepth, maxContentWindow, false);
 	}
 	
 	/**
-	 * Get the default GeoParser.
-	 * @param pathToLuceneIndex Path to the local Lucene index.
-	 * @param extractor A specific implementation of LocationExtractor to be used
-	 * @param maxHitDepth Number of candidate matches to consider
-	 * @param maxContentWindow How much context to consider when resolving
-	 * @param fuzzy Should fuzzy matching be used?
-	 * @return GeoParser
-	 * @throws IOException If file isn't found or can't be read.
+	 * Get a GeoParser with defined values for maxHitDepth and
+	 * maxContentWindow, fuzzy matching explicitly turned on or off,
+	 * and a specific LocationExtractor to use.
+	 * 
+	 * @param pathToLuceneIndex 	Path to the local Lucene index.
+	 * @param extractor 			A specific implementation of LocationExtractor to be used
+	 * @param maxHitDepth 			Number of candidate matches to consider
+	 * @param maxContentWindow 		How much context to consider when resolving
+	 * @param fuzzy 				Should fuzzy matching be used?
+	 * @return 						GeoParser
+	 * @throws IOException 			If file isn't found or can't be read.
 	 * @throws ParseException
 	 */
 	public static GeoParser getDefault(
 			String pathToLuceneIndex, LocationExtractor extractor, int maxHitDepth, int maxContentWindow, boolean fuzzy) 
 					throws IOException, ParseException{
-				
+		
+		// instantiate new LuceneLocationResolver with supplied parameters
 		LocationResolver resolver = new LuceneLocationResolver(
 				new File(pathToLuceneIndex), maxHitDepth, maxContentWindow);
 		

@@ -104,7 +104,6 @@ public class LuceneLocationResolver implements LocationResolver {
 	 * @throws ParseException
 	 */
 	public LuceneLocationResolver(File indexDir, int maxHitDepth, int maxContextWindow) throws IOException, ParseException {
-		
 		// load the Lucene index directory from disk
 		index = FSDirectory.open(indexDir);
 		
@@ -137,7 +136,6 @@ public class LuceneLocationResolver implements LocationResolver {
 	 */
 	private List<ResolvedLocation> getCandidateMatches(LocationOccurrence locationName, boolean fuzzy)
 			throws IOException, ParseException{
-		
 		// santize the query input
 		String sanitizedLocationName = escape(locationName.name.toLowerCase());
 		
@@ -232,7 +230,6 @@ public class LuceneLocationResolver implements LocationResolver {
   	 * @return				list of best matches for each location name
   	 */
   	private List<ResolvedLocation> pickBestCandidates(List<List<ResolvedLocation>> allCandidates) {
-  		
   		// initialize return object
   		List<ResolvedLocation> bestCandidates = new ArrayList<ResolvedLocation>();
   		
@@ -322,7 +319,6 @@ public class LuceneLocationResolver implements LocationResolver {
   	 * @return				all combinations of candidate matches for each location, down to the specified depth
   	 */
   	private List<List<ResolvedLocation>> generateAllCombos(List<List<ResolvedLocation>> allCandidates, int index, int depth) {
-  		
 		// stopping condition
 		if(index == allCandidates.size()) {
 			// return a list with an empty list
@@ -372,8 +368,7 @@ public class LuceneLocationResolver implements LocationResolver {
      **/
   	@Override
     public List<ResolvedLocation> resolveLocations(List<LocationOccurrence> locations, boolean fuzzy) throws IOException, ParseException {
-    	
-    	// forgetting something?
+    	// are you forgetting something?
     	if (locations == null)
     		return new ArrayList<ResolvedLocation>();
     	

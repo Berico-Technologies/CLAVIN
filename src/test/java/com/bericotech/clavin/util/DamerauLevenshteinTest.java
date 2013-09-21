@@ -290,7 +290,7 @@ public class DamerauLevenshteinTest {
 		 * 
 		 * @param a					String to be mutated
 		 * @param mutationFactor	Likelihood that any char will be changed
-		 * @return
+		 * @return					a "mutated" String
 		 */
 		public String mutateString(String a, int mutationFactor) {
 			String b = a; // start with a perfect copy
@@ -315,6 +315,11 @@ public class DamerauLevenshteinTest {
 			return b;
 		}
 		
+		/**
+		 * Generates pseudo-random ASCII characters.
+		 * 
+		 * @return	a pseudo-random ASCII character
+		 */
 		private char randChar() {
 			return Long.toString(Math.abs(r.nextLong()), 36).charAt(0);
 		}

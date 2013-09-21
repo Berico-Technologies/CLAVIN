@@ -40,7 +40,7 @@ import org.apache.lucene.util.Version;
  */
 public class WhitespaceLowerCaseAnalyzer extends Analyzer {
 	
-	// Lucene v4.0-BETA offers a nice speed increase over v3.6.1 in
+	// Lucene v4.0 offers a nice speed increase over v3.6.1 in
 	// terms of fuzzy search
 	private final static Version matchVersion = Version.LUCENE_40;
 	

@@ -42,7 +42,6 @@ import java.util.TreeMap;
  * alignment distance" where no substring may be edited more than once.
  */
 public class DamerauLevenshtein {
-	
 	// sentinel value for the end of contents in an "infinite" array
 	final static Null endMarker = new Null();
 
@@ -57,7 +56,6 @@ public class DamerauLevenshtein {
 	 * @return		Edit distance between strings
 	 */
 	public static int damerauLevenshteinDistance(String str1, String str2) {
-		
 		// return fast if one or both strings is empty or null
 		if ((str1 == null) || str1.isEmpty()) {
 			if ((str2 == null) || str2.isEmpty()) {
@@ -193,7 +191,6 @@ public class DamerauLevenshtein {
  *
  */
 class InfiniteCharArray {
-	
 	// the array being encapsulated
 	private char[] array;
 	

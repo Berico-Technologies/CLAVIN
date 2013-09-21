@@ -52,5 +52,4 @@ public class TextUtils {
     public static String fileToString(File file) throws IOException {
         return IOUtils.toString(new BufferedReader(new FileReader(file)));
     }
-    
 }

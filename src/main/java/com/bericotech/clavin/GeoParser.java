@@ -60,6 +60,13 @@ public class GeoParser {
 	// switch controlling use of fuzzy matching
 	private final boolean fuzzy;
 	
+	/**
+	 * Default constructor.
+	 * 
+	 * @param extractor		extracts location names from text
+	 * @param resolver		resolves location names to gazetteer
+	 * @param fuzzy			switch to turn on/off fuzzy matching
+	 */
 	public GeoParser(LocationExtractor extractor, LocationResolver resolver, boolean fuzzy){
 		this.extractor = extractor;
 		this.resolver = resolver;
@@ -91,9 +98,7 @@ public class GeoParser {
 		List<ResolvedLocation> resolvedLocations = resolver.resolveLocations(locationNames, fuzzy);
 		
 		logger.trace("resolved: {}", resolvedLocations);
-		
-		// TODO: extract & resolve coords (lat/lon & MGRS) to nearest named location in gazetteer
-		
+				
 		return resolvedLocations;
 	}
 	

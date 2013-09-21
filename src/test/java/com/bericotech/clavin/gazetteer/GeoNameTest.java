@@ -64,15 +64,18 @@ public class GeoNameTest {
 	 */
 	@Test
 	public void testParseFromGeoNamesRecord() throws IOException, ParseException {
+		// load GeoNames.org sample data file & instantiate corresponding GeoName objects
 		BufferedReader r = new BufferedReader(new InputStreamReader(new FileInputStream(
 				new File("./src/test/resources/gazetteers/GeoNamesSampleSet.txt")), "UTF-8"));
 		String line;
 		ArrayList<GeoName> geonames = new ArrayList<GeoName>();
 		while ((line = r.readLine()) != null)
 			geonames.add(GeoName.parseFromGeoNamesRecord(line));
+		r.close();
 		
+		// check all attributed for a standard US city
 		GeoName geoname;
-		geoname = geonames.get(0); // standard US city
+		geoname = geonames.get(0);
 		assertEquals("incorrect geonameID", 4781530, geoname.geonameID);
 		assertEquals("incorrect name", "Reston", geoname.name);
 		assertEquals("incorrect asciiName", "Reston", geoname.asciiName);
@@ -94,7 +97,8 @@ public class GeoNameTest {
 		assertEquals("incorrect timezone", TimeZone.getTimeZone("America/New_York"), geoname.timezone);
 		assertEquals("incorrect modificationDate", new SimpleDateFormat("yyyy-MM-dd").parse("2011-05-14"), geoname.modificationDate);
 		
-		geoname = geonames.get(1); // lots of UTF chars & missing columns
+		// lots of UTF chars & missing columns
+		geoname = geonames.get(1);
 		assertEquals("incorrect geonameID", 1139905, geoname.geonameID);
 		assertEquals("incorrect name", "Ḩowẕ-e Ḩājī Bēg", geoname.name);
 		assertEquals("incorrect asciiName", "Howz-e Haji Beg", geoname.asciiName);
@@ -102,25 +106,28 @@ public class GeoNameTest {
 		assertEquals("incorrect latitude", 34.90489, geoname.latitude, 0.1);
 		assertEquals("incorrect longitude", 64.10312, geoname.longitude, 0.1);
 		
-		geoname = geonames.get(2); // seldom-used fields
+		// seldom-used fields
+		geoname = geonames.get(2);
 		assertEquals("incorrect geonameID", 2826158, geoname.geonameID);
 		assertEquals("incorrect alternateNames", new ArrayList<String>(), geoname.alternateNames);
 		assertEquals("incorrect adminCode3", "07138", geoname.admin3Code);
 		assertEquals("incorrect adminCode4", "07138071", geoname.admin4Code);
 		
-		geoname = geonames.get(3); // no primaryCountryCode
+		// no primaryCountryCode
+		geoname = geonames.get(3);
 		assertEquals("incorrect primaryCountryCode", CountryCode.NULL, geoname.primaryCountryCode);
 		
-		geoname = geonames.get(4); // non-empty alternateCountryCodes
+		// non-empty alternateCountryCodes
+		geoname = geonames.get(4);
 		assertEquals("incorrect alternateCountryCodes", Arrays.asList(CountryCode.US, CountryCode.MX), geoname.alternateCountryCodes);
 		
-		geoname = geonames.get(5); // malformed alternateCountryCodes
+		// malformed alternateCountryCodes
+		geoname = geonames.get(5);
 		assertEquals("incorrect alternateCountryCodes", Arrays.asList(CountryCode.PS), geoname.alternateCountryCodes);
 		
-		geoname = geonames.get(6); // no featureCode
+		// no featureCode
+		geoname = geonames.get(6);
 		assertEquals("incorrect featureClass", FeatureCode.NULL, geoname.featureCode);
-		
-		r.close();
 	}
 	
 	/**
@@ -138,7 +145,6 @@ public class GeoNameTest {
 		ArrayList<GeoName> geonames = new ArrayList<GeoName>();
 		while ((line = r.readLine()) != null)
 			geonames.add(GeoName.parseFromGeoNamesRecord(line));
-		
 		r.close();
 		
 		// if no exceptions are thrown, the test is assumed to have succeeded

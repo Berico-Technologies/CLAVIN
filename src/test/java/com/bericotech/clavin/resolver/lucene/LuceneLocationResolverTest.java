@@ -172,9 +172,15 @@ public class LuceneLocationResolverTest {
 		assertEquals("LocationResolver failed on missing term", GUN_BARREL_CITY_TX, resolvedLocations.get(5).geoname.geonameID);
 	}
 	
-	
+	/**
+	 * Tests some border cases involving the resolver.
+	 * 
+	 * @throws IOException
+	 * @throws ParseException
+	 */
 	@Test
 	public void testBorderCases() throws IOException, ParseException {
+		// ensure we get no matches for this crazy String
 		String[] locations = {"jhadghaoidhg"};
 		
 		resolvedLocations = resolverNoHeuristics.resolveLocations(makeOccurrencesFromNames(locations), false);
@@ -184,6 +190,12 @@ public class LuceneLocationResolverTest {
 		assertTrue("LocationResolver fuzzy on, no match", resolvedLocations.isEmpty());		
 	}
 	
+	/**
+	 * Ensure exception is thrown when trying to read non-existing file.
+	 * 
+	 * @throws IOException
+	 * @throws ParseException
+	 */
 	@Test(expected=IOException.class)
 	public void testIOError() throws IOException, ParseException {
 		indexDirectory = new File("./IMAGINARY_FILE");

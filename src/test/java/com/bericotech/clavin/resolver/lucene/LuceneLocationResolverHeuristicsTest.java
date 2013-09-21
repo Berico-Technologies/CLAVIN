@@ -218,9 +218,16 @@ public class LuceneLocationResolverHeuristicsTest {
 		assertEquals("LocationResolver chose the wrong \"London\"", LONDON_ON, resolvedLocations.get(4).geoname.geonameID);
 	}
 	
+	/**
+	 * Tests some border cases involving the resolver.
+	 * 
+	 * @throws IOException
+	 * @throws ParseException
+	 */
 	@Test
 	public void testBorderCases() throws IOException, ParseException {
-		String[] locations = {"jhadghaoidhg"};
+		// ensure we get no matches for this crazy String
+		String[] locations = {"jhadghaoidhg"};	
 		
 		resolvedLocations = resolverWithHeuristics.resolveLocations(LuceneLocationResolverTest.makeOccurrencesFromNames(locations), false);
 		assertTrue("Heuristic LocationResolver fuzzy off, no match", resolvedLocations.isEmpty());

@@ -75,6 +75,12 @@ public class ListUtilsTest {
 		assertEquals("", lists5, chunkedLists);
 	}
 	
+	/**
+	 * Ensures an exception is thrown when trying to divide a List into
+	 * chunks of size zero.
+	 * 
+	 * @throws IOException
+	 */
 	@Test(expected=InvalidParameterException.class)
 	public void testZeroChunk() throws IOException {
 		chunkifyList(null, 0);

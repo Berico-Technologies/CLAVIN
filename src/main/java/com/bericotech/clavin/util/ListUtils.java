@@ -53,7 +53,6 @@ public class ListUtils {
 	 * @return				a chunkified list (i.e., list of sublists)
 	 */
 	public static <T> List<List<T>> chunkifyList(List<T> list, int maxChunkSize) {
-		
 		// sanity-check input param
 		if (maxChunkSize < 1)
 			throw new InvalidParameterException("maxChunkSize must be greater than zero");

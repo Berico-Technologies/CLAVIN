@@ -74,10 +74,10 @@ public class GeoName {
 	// ISO-3166 2-letter country code
 	public final CountryCode primaryCountryCode;
 
-  // associated name with country code
-  public String getPrimaryCountryName(){
-    return  primaryCountryCode.name;
-  }
+	// associated name with country code
+	public String getPrimaryCountryName(){
+		return  primaryCountryCode.name;
+	}
 
 	// list of alternate ISO-3166 2-letter country codes
 	public final List<CountryCode> alternateCountryCodes;
