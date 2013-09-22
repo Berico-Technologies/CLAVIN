@@ -12,3 +12,4 @@ allCountries.txt
 src/test/resources/evaluation
 Evaluator.java
 StanfordExtractor.java
+/dependency-reduced-pom.xml
