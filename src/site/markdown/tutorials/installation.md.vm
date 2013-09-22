@@ -1,0 +1,14 @@
+## Velocity comments use two hashes; so we need an alternative variable
+## to represent Markdown headers.
+#set($H = '#')
+#set($B = 'CLAVIN-release-' + $project.version)
+#set($F = $B + '.zip')
+#set($D = 'https://github.com/Berico-Technologies/CLAVIN/archive/release/' + $project.version + '.zip')
+#set($JAR = 'clavin-' + $project.version + '.jar')
+#set($JARD = 'clavin-' + $project.version + '-jar-with-dependencies.jar')
+#set($JARS = 'clavin-' + $project.version + '-sources.jar')
+#set($JARJ = 'clavin-' + $project.version + '-javadoc.jar')
+
+$H Installation
+
+(coming soon)

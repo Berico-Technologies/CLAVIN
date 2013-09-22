@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="CLAVIN Documentation">
+   <skin>
+	   <groupId>org.apache.maven.skins</groupId>
+	   <artifactId>maven-fluido-skin</artifactId>
+	   <version>1.3.0</version>
+  </skin>
+  <custom>
+    <topBarEnabled>false</topBarEnabled>
+    <sideBarEnabled>true</sideBarEnabled>
+    <fluidoSkin>
+        <sourceLineNumbersEnabled>true</sourceLineNumbersEnabled>
+    </fluidoSkin>
+  </custom>
+  <publishDate position="right" />
+  <version position="right"/>
+  <poweredBy>
+        <logo name="Maven" href="http://maven.apache.org/"
+              img="http://maven.apache.org/images/logos/maven-feather.png"/>
+  </poweredBy>
+  <body>
+    <breadcrumbs>
+      <item name="Berico Technologies" href="http://bericotech.com"/>
+      <item name="Fork Me on GitHub" href="http://github.com/Berico-Technologies/CLAVIN"/>
+    </breadcrumbs>
+    <menu>
+        <item name="Overview" href="index.html"  />
+        <item name="Roadmap" href="roadmap.html"  />
+    </menu>
+    <menu name="Tutorials">
+        <item name="Installation" href="tutorials/installation.html" />
+        <item name="5-Minute Tutorial" href="tutorials/fivemin-tutorial.html" />
+    </menu>
+    <menu name="Changelog">
+        <item name="v1.0.x" href="changelog/changes-v1.0.x.html" />
+    </menu>
+    <menu name="Documentation">
+      <item name="How CLAVIN Works" href="documentation/how-clavin-works.html" />
+    </menu>
+    <menu name="Maven Information" ref="reports" />
+  </body>
+  
+</project>
