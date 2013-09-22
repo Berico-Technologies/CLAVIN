@@ -28,6 +28,12 @@
         <include>site/*</include>
       </includes>
     </fileSet>
-    
+    <fileSet>
+      <directory>bin</directory>
+      <outputDirectory>bin</outputDirectory>
+      <includes>
+        <include>clavin</include>
+      </includes>
+    </fileSet>
   </fileSets>  
 </assembly>
