@@ -19,7 +19,7 @@ import org.apache.lucene.util.Version;
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  * 
- * 		http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -39,26 +39,26 @@ import org.apache.lucene.util.Version;
  * 
  */
 public class WhitespaceLowerCaseAnalyzer extends Analyzer {
-	
-	// Lucene v4.0 offers a nice speed increase over v3.6.1 in
-	// terms of fuzzy search
-	private final static Version matchVersion = Version.LUCENE_40;
-	
-	/**
-	 * Simple default constructor for
-	 * {@link WhitespaceLowerCaseAnalyzer}.
-	 * 
-	 */
-	public WhitespaceLowerCaseAnalyzer() {}
-	
-	/**
-	 * Provides tokenizer access for the analyzer.
-	 * 
-	 * @param fieldName		field to be tokenized
-	 * @param reader
-	 */
-	@Override
-	protected TokenStreamComponents createComponents(final String fieldName, final Reader reader) {
-		return new TokenStreamComponents(new WhitespaceLowerCaseTokenizer(matchVersion, reader));
-	}
+    
+    // Lucene v4.0 offers a nice speed increase over v3.6.1 in
+    // terms of fuzzy search
+    private final static Version matchVersion = Version.LUCENE_40;
+    
+    /**
+     * Simple default constructor for
+     * {@link WhitespaceLowerCaseAnalyzer}.
+     * 
+     */
+    public WhitespaceLowerCaseAnalyzer() {}
+    
+    /**
+     * Provides tokenizer access for the analyzer.
+     * 
+     * @param fieldName     field to be tokenized
+     * @param reader
+     */
+    @Override
+    protected TokenStreamComponents createComponents(final String fieldName, final Reader reader) {
+        return new TokenStreamComponents(new WhitespaceLowerCaseTokenizer(matchVersion, reader));
+    }
 }

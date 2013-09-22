@@ -14,7 +14,7 @@ package com.bericotech.clavin.extractor;
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * 		http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -36,7 +36,7 @@ package com.bericotech.clavin.extractor;
  * 
  */
 public class LocationOccurrence {
-	// text of location name
+    // text of location name
     public final String name;
     
     // number of UTF-16 code units from the start of the document at
@@ -48,8 +48,8 @@ public class LocationOccurrence {
      * 
      * Represents a location name found in a document.
      * 
-     * @param text		text of the location name
-     * @param position	where it was found
+     * @param text      text of the location name
+     * @param position  where it was found
      */
     public LocationOccurrence(String text, int position) {
         this.name = text;
@@ -59,7 +59,7 @@ public class LocationOccurrence {
     /**
      * Tests equivalence based on name and position.
      * 
-     * @param o		Object to compare this against
+     * @param o     Object to compare this against
      */
     @Override
     public boolean equals(Object o) {

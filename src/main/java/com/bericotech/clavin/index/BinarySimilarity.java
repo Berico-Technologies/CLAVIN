@@ -16,7 +16,7 @@ import org.apache.lucene.search.similarities.DefaultSimilarity;
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  * 
- * 		http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -36,10 +36,10 @@ import org.apache.lucene.search.similarities.DefaultSimilarity;
  * 
  */
 public class BinarySimilarity extends DefaultSimilarity {
-	
-	/**
-	 * Simple default constructor for {@link BinarySimilarity}.
-	 */
+    
+    /**
+     * Simple default constructor for {@link BinarySimilarity}.
+     */
     public BinarySimilarity() {}
     
     /**
@@ -49,12 +49,12 @@ public class BinarySimilarity extends DefaultSimilarity {
      * get extra points for a query term being found multiple times in
      * an index document field).
      * 
-     * @param freq		floating-point number being converted to 1.0 or 0.0
+     * @param freq      floating-point number being converted to 1.0 or 0.0
      */
     @Override
     public float tf(float freq) {
         if (freq > 0)
-        	return 1.0f;
+            return 1.0f;
         else return 0.0f;
     }
 

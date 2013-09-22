@@ -19,7 +19,7 @@ import org.apache.lucene.util.Version;
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  * 
- * 		http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -43,34 +43,34 @@ import org.apache.lucene.util.Version;
  * 
  */
 public class WhitespaceLowerCaseTokenizer extends CharTokenizer {
-	
-	/**
-	 * Call the "super" constructor.
-	 * 
-	 * @param matchVersion		e.g., Version.LUCENE_40
-	 * @param in
-	 */
-	public WhitespaceLowerCaseTokenizer(Version matchVersion, Reader in) {
-		super(matchVersion, in);
-	}
+    
+    /**
+     * Call the "super" constructor.
+     * 
+     * @param matchVersion      e.g., Version.LUCENE_40
+     * @param in
+     */
+    public WhitespaceLowerCaseTokenizer(Version matchVersion, Reader in) {
+        super(matchVersion, in);
+    }
 
-	/** Collects only characters which do not satisfy
-	 * {@link Character#isWhitespace(int)}.
-	 * 
-	 * @param c		char being processed
-	 */
-	@Override
-	protected boolean isTokenChar(int c) {
-		return !Character.isWhitespace(c);
-	}
+    /** Collects only characters which do not satisfy
+     * {@link Character#isWhitespace(int)}.
+     * 
+     * @param c     char being processed
+     */
+    @Override
+    protected boolean isTokenChar(int c) {
+        return !Character.isWhitespace(c);
+    }
 
-	/** Converts char to lower case
-	 * {@link Character#toLowerCase(int)}.
-	 * 
-	 * @param c		char being processed
-	 */
-	@Override
-	protected int normalize(int c) {
-		return Character.toLowerCase(c);
-	}
+    /** Converts char to lower case
+     * {@link Character#toLowerCase(int)}.
+     * 
+     * @param c     char being processed
+     */
+    @Override
+    protected int normalize(int c) {
+        return Character.toLowerCase(c);
+    }
 }

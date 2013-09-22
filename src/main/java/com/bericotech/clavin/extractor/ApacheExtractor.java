@@ -26,7 +26,7 @@ import opennlp.tools.util.Span;
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  * 
- * 		http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -47,39 +47,39 @@ import opennlp.tools.util.Span;
  */
 public class ApacheExtractor implements LocationExtractor {
     
-	// the actual named entity recognizer (NER) object
-	private NameFinderME nameFinder;
-	
-	// used to tokenize plain text into the OpenNLP format
-	private TokenizerME tokenizer;
+    // the actual named entity recognizer (NER) object
+    private NameFinderME nameFinder;
+    
+    // used to tokenize plain text into the OpenNLP format
+    private TokenizerME tokenizer;
 
     // used to split the input into sentences before finding names
     private SentenceDetectorME sentenceDetector;
-	
-	// resource files used by Apache OpenNLP Name Finder
-	private static final String pathToNERModel = "/en-ner-location.bin";
-	private static final String pathToTokenizerModel = "/en-token.bin";
+    
+    // resource files used by Apache OpenNLP Name Finder
+    private static final String pathToNERModel = "/en-ner-location.bin";
+    private static final String pathToTokenizerModel = "/en-token.bin";
     private static final String pathToSentenceDetectorModel = "/en-sent.bin";
 
-	
-	/**
-	 * Builds an {@link ApacheExtractor} by instantiating the OpenNLP
-	 * Name Finder and Tokenizer.
-	 * 
-	 * @throws IOException 
-	 */
-	public ApacheExtractor() throws IOException {
-		nameFinder = new NameFinderME(new TokenNameFinderModel(ApacheExtractor.class.getResourceAsStream(pathToNERModel)));
-		tokenizer = new TokenizerME(new TokenizerModel(ApacheExtractor.class.getResourceAsStream(pathToTokenizerModel)));
+    
+    /**
+     * Builds an {@link ApacheExtractor} by instantiating the OpenNLP
+     * Name Finder and Tokenizer.
+     * 
+     * @throws IOException 
+     */
+    public ApacheExtractor() throws IOException {
+        nameFinder = new NameFinderME(new TokenNameFinderModel(ApacheExtractor.class.getResourceAsStream(pathToNERModel)));
+        tokenizer = new TokenizerME(new TokenizerModel(ApacheExtractor.class.getResourceAsStream(pathToTokenizerModel)));
         sentenceDetector = new SentenceDetectorME(new SentenceModel(ApacheExtractor.class.getResourceAsStream(pathToSentenceDetectorModel)));
-	}
-	
-	/**
-	 * Extracts location names from unstructured text using the named
-	 * entity recognizer (NER) feature provided by the Apache OpenNLP
-	 * Name Finder.
-	 * 
-	 * @param plainText		Contents of text document
+    }
+    
+    /**
+     * Extracts location names from unstructured text using the named
+     * entity recognizer (NER) feature provided by the Apache OpenNLP
+     * Name Finder.
+     * 
+     * @param plainText     Contents of text document
      * @return List of location names and positions
      */
     public List<LocationOccurrence> extractLocationNames(String plainText) {
@@ -95,7 +95,7 @@ public class ApacheExtractor implements LocationExtractor {
         // Each sentence gets processed on its own
         for (Span sentenceSpan : sentenceSpans) {
 
-        	// find the start and end position of this sentence in the document
+            // find the start and end position of this sentence in the document
             String sentence = plainText.substring(sentenceSpan.getStart(), sentenceSpan.getEnd());
 
             // tokenize the text into the required OpenNLP format

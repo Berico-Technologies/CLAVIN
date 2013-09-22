@@ -21,7 +21,7 @@ import java.nio.charset.Charset;
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  * 
- * 		http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -44,30 +44,30 @@ import java.nio.charset.Charset;
  */
 public class FeatureCodeBuilder {
 
-	/**
-	 * Reads-in featureCodes_en.txt file, spits-out
-	 * {@link FeatureClass} enum definitions.
-	 * 
-	 * @throws FileNotFoundException
-	 * @throws IOException
-	 */
-	public static void generateFeatureCodes() throws FileNotFoundException, IOException {
-		BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream("./featureCodes_en.txt"), Charset.forName("UTF-8")));
-		String line;
-		while ((line = in.readLine()) != null) {
-			String[] tokens = line.split("\t");
-			if (tokens[0].equals("null")) {
-				System.out.println("NULL(FeatureClass.NULL, \"not available\", \"\");");
-			} else {
-				String[] codes = tokens[0].split("\\.");
-				if (tokens.length == 3) {
-					System.out.println(codes[1] + "(FeatureClass." + codes[0] + ", \"" + tokens[1] + "\", \"" + tokens[2] + "\"),");
-				} else {
-					System.out.println(codes[1] + "(FeatureClass." + codes[0] + ", \"" + tokens[1] + "\", \"\"),");
-				}
-			}
-		}
-		in.close();
-	}
+    /**
+     * Reads-in featureCodes_en.txt file, spits-out
+     * {@link FeatureClass} enum definitions.
+     * 
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
+    public static void generateFeatureCodes() throws FileNotFoundException, IOException {
+        BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream("./featureCodes_en.txt"), Charset.forName("UTF-8")));
+        String line;
+        while ((line = in.readLine()) != null) {
+            String[] tokens = line.split("\t");
+            if (tokens[0].equals("null")) {
+                System.out.println("NULL(FeatureClass.NULL, \"not available\", \"\");");
+            } else {
+                String[] codes = tokens[0].split("\\.");
+                if (tokens.length == 3) {
+                    System.out.println(codes[1] + "(FeatureClass." + codes[0] + ", \"" + tokens[1] + "\", \"" + tokens[2] + "\"),");
+                } else {
+                    System.out.println(codes[1] + "(FeatureClass." + codes[0] + ", \"" + tokens[1] + "\", \"\"),");
+                }
+            }
+        }
+        in.close();
+    }
 
 }

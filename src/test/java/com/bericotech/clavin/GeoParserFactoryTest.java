@@ -21,7 +21,7 @@ import org.junit.Test;
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  * 
- * 		http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -41,17 +41,17 @@ import org.junit.Test;
  */
 public class GeoParserFactoryTest {
 
-	/**
-	 * Ensures GeoParserFactory is correctly instantiating the
-	 * {@link GeoParser} class.
-	 * @throws IOException
-	 * @throws ParseException
-	 */
-	@Test
-	public void testGetDefault() throws IOException, ParseException {
-		assertEquals("factory index", GeoParser.class, GeoParserFactory.getDefault("./IndexDirectory").getClass());
-		assertEquals("factory fuzzy", GeoParser.class, GeoParserFactory.getDefault("./IndexDirectory", true).getClass());
-		assertEquals("factory parameters", GeoParser.class, GeoParserFactory.getDefault("./IndexDirectory", 1, 1).getClass());
-	}
+    /**
+     * Ensures GeoParserFactory is correctly instantiating the
+     * {@link GeoParser} class.
+     * @throws IOException
+     * @throws ParseException
+     */
+    @Test
+    public void testGetDefault() throws IOException, ParseException {
+        assertEquals("factory index", GeoParser.class, GeoParserFactory.getDefault("./IndexDirectory").getClass());
+        assertEquals("factory fuzzy", GeoParser.class, GeoParserFactory.getDefault("./IndexDirectory", true).getClass());
+        assertEquals("factory parameters", GeoParser.class, GeoParserFactory.getDefault("./IndexDirectory", 1, 1).getClass());
+    }
 
 }

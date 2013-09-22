@@ -21,7 +21,7 @@ import org.junit.Test;
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  * 
- * 		http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -41,19 +41,19 @@ import org.junit.Test;
  */
 public class TextUtilsTest {
 
-	/**
-	 * Ensures the contents extracted from a file are an exact match
-	 * with the expected String.
-	 * 
-	 * @throws IOException
-	 */
-	@Test
-	public void testFileToString() throws IOException {
-		// TODO: fix this test so it works with Windows newline chars
-		File inputFile = new File("src/test/resources/sample-docs/SampleText.txt");
-		String expectedString = "Line1 word2\nLine2 word2 word3\nLine3";
-		String fileString = TextUtils.fileToString(inputFile);
-		assertEquals("wrong output from fileToString", expectedString, fileString);
-	}
+    /**
+     * Ensures the contents extracted from a file are an exact match
+     * with the expected String.
+     * 
+     * @throws IOException
+     */
+    @Test
+    public void testFileToString() throws IOException {
+        // TODO: fix this test so it works with Windows newline chars
+        File inputFile = new File("src/test/resources/sample-docs/SampleText.txt");
+        String expectedString = "Line1 word2\nLine2 word2 word3\nLine3";
+        String fileString = TextUtils.fileToString(inputFile);
+        assertEquals("wrong output from fileToString", expectedString, fileString);
+    }
 
 }

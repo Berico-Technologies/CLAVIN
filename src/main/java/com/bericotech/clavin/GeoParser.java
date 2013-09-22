@@ -24,7 +24,7 @@ import com.bericotech.clavin.resolver.ResolvedLocation;
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  * 
- * 		http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -48,58 +48,58 @@ import com.bericotech.clavin.resolver.ResolvedLocation;
  *
  */
 public class GeoParser {
-	
-	private static final Logger logger = LoggerFactory.getLogger(GeoParser.class);
+    
+    private static final Logger logger = LoggerFactory.getLogger(GeoParser.class);
 
-	// entity extractor to find location names in text
-	private LocationExtractor extractor;
-	
-	// resolver to match location names against gazetteer records
-	private LocationResolver resolver;
-	
-	// switch controlling use of fuzzy matching
-	private final boolean fuzzy;
-	
-	/**
-	 * Default constructor.
-	 * 
-	 * @param extractor		extracts location names from text
-	 * @param resolver		resolves location names to gazetteer
-	 * @param fuzzy			switch to turn on/off fuzzy matching
-	 */
-	public GeoParser(LocationExtractor extractor, LocationResolver resolver, boolean fuzzy){
-		this.extractor = extractor;
-		this.resolver = resolver;
-		this.fuzzy = fuzzy;
-	}
-	
-	/**
-	 * Takes an unstructured text document (as a String), extracts the
-	 * location names contained therein, and resolves them into
-	 * geographic entities representing the best match for those
-	 * location names.
-	 * 
-	 * @param inputText		unstructured text to be processed
-	 * @return				list of geo entities resolved from text
-	 * @throws Exception
-	 */
-	public List<ResolvedLocation> parse(String inputText) throws Exception {
-		
-		logger.trace("input: {}", inputText);
-		
-		// first, extract location names from the text
-		List<LocationOccurrence> locationNames = extractor.extractLocationNames(inputText);
-		
-		logger.trace("extracted: {}", locationNames);
-		
-		// then, resolve the extracted location names against a
-		// gazetteer to produce geographic entities representing the
-		// locations mentioned in the original text
-		List<ResolvedLocation> resolvedLocations = resolver.resolveLocations(locationNames, fuzzy);
-		
-		logger.trace("resolved: {}", resolvedLocations);
-				
-		return resolvedLocations;
-	}
-	
+    // entity extractor to find location names in text
+    private LocationExtractor extractor;
+    
+    // resolver to match location names against gazetteer records
+    private LocationResolver resolver;
+    
+    // switch controlling use of fuzzy matching
+    private final boolean fuzzy;
+    
+    /**
+     * Default constructor.
+     * 
+     * @param extractor     extracts location names from text
+     * @param resolver      resolves location names to gazetteer
+     * @param fuzzy         switch to turn on/off fuzzy matching
+     */
+    public GeoParser(LocationExtractor extractor, LocationResolver resolver, boolean fuzzy){
+        this.extractor = extractor;
+        this.resolver = resolver;
+        this.fuzzy = fuzzy;
+    }
+    
+    /**
+     * Takes an unstructured text document (as a String), extracts the
+     * location names contained therein, and resolves them into
+     * geographic entities representing the best match for those
+     * location names.
+     * 
+     * @param inputText     unstructured text to be processed
+     * @return              list of geo entities resolved from text
+     * @throws Exception
+     */
+    public List<ResolvedLocation> parse(String inputText) throws Exception {
+        
+        logger.trace("input: {}", inputText);
+        
+        // first, extract location names from the text
+        List<LocationOccurrence> locationNames = extractor.extractLocationNames(inputText);
+        
+        logger.trace("extracted: {}", locationNames);
+        
+        // then, resolve the extracted location names against a
+        // gazetteer to produce geographic entities representing the
+        // locations mentioned in the original text
+        List<ResolvedLocation> resolvedLocations = resolver.resolveLocations(locationNames, fuzzy);
+        
+        logger.trace("resolved: {}", resolvedLocations);
+                
+        return resolvedLocations;
+    }
+    
 }

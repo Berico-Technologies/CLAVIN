@@ -19,7 +19,7 @@ import org.junit.Test;
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  * 
- * 		http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -39,17 +39,17 @@ import org.junit.Test;
  */
 public class BinarySimilarityTest {
 
-	/**
-	 * Ensures output is either 1 (for all inputs > 0), or 0.
-	 */
-	@Test
-	public void testTF() {
-		DefaultSimilarity sim = new BinarySimilarity();
-		assertEquals("big positive number", 1, (int)Math.round(sim.tf(999)));
-		assertEquals("slightly more than 1", 1, (int)Math.round(sim.tf(2)));
-		assertEquals("just 1", 1, (int)Math.round(sim.tf(1)));
-		assertEquals("slightly less than 1", 0, (int)Math.round(sim.tf(0)));
-		assertEquals("big negative number", 0, (int)Math.round(sim.tf(-999)));
-	}
+    /**
+     * Ensures output is either 1 (for all inputs > 0), or 0.
+     */
+    @Test
+    public void testTF() {
+        DefaultSimilarity sim = new BinarySimilarity();
+        assertEquals("big positive number", 1, (int)Math.round(sim.tf(999)));
+        assertEquals("slightly more than 1", 1, (int)Math.round(sim.tf(2)));
+        assertEquals("just 1", 1, (int)Math.round(sim.tf(1)));
+        assertEquals("slightly less than 1", 0, (int)Math.round(sim.tf(0)));
+        assertEquals("big negative number", 0, (int)Math.round(sim.tf(-999)));
+    }
 
 }
