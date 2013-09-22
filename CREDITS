@@ -19,12 +19,18 @@ permissions and limitations under the License.
 
 ====================================================================
 
-The primary developer and product owner of CLAVIN is:
+The creator and product owner of CLAVIN is:
 	Charlie Greenbacker
 	Principal Data Scientist, Berico Technologies
 	charlie@bericotechnologies.com
 
+The technical lead for CLAVIN is:
+	Travis Pinney
+	Senior Software Engineer, Berico Technologies
+	tpinney@bericotechnologies.com
+
 Other contributors include:
+	(Berico Technologies unless otherwise indicated)
 	Travis Camechis
 	Richard Clayton
 	Catherine D'Ignazio (MIT Center for Civic Media)
@@ -33,8 +39,10 @@ Other contributors include:
 	Sean Lavelle (Thetus Corporation)
 	Minh Nguyen
 	Kirill Orlov
+	Andrew Pennebaker (YelloSoft)
 	Kelly Plummer (RadiantBlue Technologies)
 	Jason Tibbetts
+	Noah Veltman (http://noahveltman.com/)
 	Matt Woytowitz
 
 ====================================================================

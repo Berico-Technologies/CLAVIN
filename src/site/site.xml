@@ -20,8 +20,8 @@
   </poweredBy>
   <body>
     <breadcrumbs>
-      <item name="Berico Technologies" href="http://beri.co"/>
-      <item name="CLAVIN @ GitHub" href="http://github.com/Berico-Technologies/CLAVIN"/>
+      <item name="Berico Technologies" href="http://bericotech.com"/>
+      <item name="Fork Me on GitHub" href="http://github.com/Berico-Technologies/CLAVIN"/>
     </breadcrumbs>
     <menu>
         <item name="Overview" href="index.html"  />
@@ -32,23 +32,10 @@
         <item name="5-Minute Tutorial" href="tutorials/fivemin-tutorial.html" />
     </menu>
     <menu name="Changelog">
-        <item name="v0.4.0" href="changelog/changes-v0.4.0.html" />
+        <item name="v1.0.x" href="changelog/changes-v1.0.x.html" />
     </menu>
     <menu name="Documentation">
-      <item name="How CLAVIN Works" href="javascript:void(0)">
-          <item name="CLAVIN's Model" href="documentation/model.html" />
-          <item name="Processing Workflow" href="documentation/workflow-tutorial.html" />
-      </item>
-      <item name="Building a Gazetteer Index" href="javascript:void(0)">
-          <item name="From Geonames" href="documentation/geonames-indexing.html" />
-          <!-- <item name="From OpenStreetMap" href="documentation/osm-indexing.html" /> -->
-          <item name="From Custom Source" href="documentation/custom-indexing.html" />
-      </item>
-      <item name="Advanced Topics" href="javascript:void(0)">
-          <item name="Creating a Coordinate Parser" href="documentation/coordinate-parser.html" /> 
-          <item name="Applying Custom Weights to Resolution" href="documentation/custom-weights.html" />
-          <item name="Resolving Locations in other Languages" href="documentation/multilingual.html" /> 
-      </item>
+      <item name="How CLAVIN Works" href="documentation/how-clavin-works.html" />
     </menu>
     <menu name="Maven Information" ref="reports" />
   </body>

@@ -1,7 +1,6 @@
 target/**
 indexDirectory/**
 IndexDirectory/
-CustomExampleIndexDirectory/
 .settings/
 .classpath
 .project
@@ -10,4 +9,7 @@ allCountries.txt
 !.gitignore
 .DS_Store
 /target
-/GeoIP
+src/test/resources/evaluation
+Evaluator.java
+StanfordExtractor.java
+/dependency-reduced-pom.xml
