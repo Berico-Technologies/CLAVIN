@@ -82,7 +82,7 @@ public class ResolvedLocation {
         // for fuzzy matches, confidence is based on the edit distance
         // between the given location name and the matched name
         if (fuzzy)
-            this.confidence = 1 / (damerauLevenshteinDistanceCaseInsensitive(location.name, matchedName) + (float)0.5);
+            this.confidence = 1 / (damerauLevenshteinDistanceCaseInsensitive(location.text, matchedName) + (float)0.5);
         else this.confidence = 1; // exact String match
         /// TODO: fix this confidence score... it doesn't fully make sense
     }
@@ -117,6 +117,6 @@ public class ResolvedLocation {
      */
     @Override
     public String toString() {
-        return "Resolved \"" + location.name + "\" as: \"" + matchedName + "\" {" + geoname + "}, position:" + location.position + ", confidence: " + confidence + ", fuzzy: " + fuzzy;
+        return "Resolved \"" + location.text + "\" as: \"" + matchedName + "\" {" + geoname + "}, position:" + location.position + ", confidence: " + confidence + ", fuzzy: " + fuzzy;
     }
 }

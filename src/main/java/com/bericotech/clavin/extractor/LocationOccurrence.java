@@ -36,8 +36,8 @@ package com.bericotech.clavin.extractor;
  * 
  */
 public class LocationOccurrence {
-    // text of location name
-    public final String name;
+    // text representation of the location (i.e., its name)
+    public final String text;
     
     // number of UTF-16 code units from the start of the document at
     // which the location name starts
@@ -52,7 +52,7 @@ public class LocationOccurrence {
      * @param position  where it was found
      */
     public LocationOccurrence(String text, int position) {
-        this.name = text;
+        this.text = text;
         this.position = position;
     }
 
@@ -69,7 +69,7 @@ public class LocationOccurrence {
         LocationOccurrence that = (LocationOccurrence) o;
 
         if (position != that.position) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (text != null ? !text.equals(that.text) : that.text != null) return false;
 
         return true;
     }
@@ -79,7 +79,7 @@ public class LocationOccurrence {
      */
     @Override
     public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
+        int result = text != null ? text.hashCode() : 0;
         result = 31 * result + position;
         return result;
     }

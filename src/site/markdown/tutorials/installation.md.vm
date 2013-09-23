@@ -11,4 +11,165 @@
 
 $H Installation
 
-(coming soon)
+CLAVIN is not designed to be a standalone application, but rather as a library component bundled into other applications as part of an ingest or processing pipeline. A common use case is to integrate CLAVIN with Apache Hadoop or Twitter Storm to extract and resolve location names from unstructured text documents, then adding the geospatial entities created by CLAVIN as facets in a document index.
+
+This section will discuss mechanisms for quickly integrating CLAVIN with a JVM-based project.
+
+$H$H Building CLAVIN from source
+
+In this example, we will checkout (or download) the CLAVIN source code from GitHub, and compile the project using Apache Maven.
+
+$H$H$H$H Step 1.  Checkout the CLAVIN project from GitHub:
+    git clone https://github.com/Berico-Technologies/CLAVIN.git
+
+$H$H$H$H Step 2. Move into the newly-created CLAVIN directory:
+    cd CLAVIN
+
+$H$H$H$H Step 3. Download the latest version of the worldwide gazetteer file from GeoNames.org:
+    curl http://download.geonames.org/export/dump/allCountries.zip -o allCountries.zip
+
+$H$H$H$H Step 4. Unzip the GeoNames gazetteer file:
+    unzip allCountries.zip
+
+$H$H$H$H Step 5. Compile the source code:
+    mvn compile
+
+$H$H$H$H Step 6. Create the Lucene Index (this one-time process will take several minutes):
+    MAVEN_OPTS="-Xmx2048M" mvn exec:java -Dexec.mainClass="com.bericotech.clavin.index.IndexDirectoryBuilder"
+
+$H$H$H$H Step 7. Build the CLAVIN package:
+    mvn package
+
+$H$H$H$H Step 8. Run the example program:
+    MAVEN_OPTS="-Xmx2048M" mvn exec:java -Dexec.mainClass="com.bericotech.clavin.WorkflowDemo"
+If you encounter an error that looks like this:
+    ... InvocationTargetException: Java heap space ...
+set the appropriate environmental variable controlling Maven's memory usage, and increase the size with `export MAVEN_OPTS=-Xmx3g` or similar.
+
+Once that all runs successfully, feel free to modify the CLAVIN source code to suit your needs, or import CLAVIN's functionality into your own program using the .jar file created in Step 7 (we recommend the `clavin-x.x.x-jar-with-dependencies.jar` file for ease of use).
+
+**Please note:** Loading the worldwide gazetteer uses a non-trivial amount of memory. When using CLAVIN in your own programs, if you encounter `Java heap space` errors (like the one described in Step 8), bump up the maximum heap size for your JVM. Allocating 2GB (e.g., `-Xmx2g`) is a good place to start.
+
+$H$H Importing CLAVIN into Eclipse as a user library
+
+Assuming you have Eclipse started and you are importing CLAVIN into an existing project:
+
+1. Right click on the project, select **Build Path** > **Add Libraries...**.
+2. In the **Add Library** window, select **User Library** and click **Next**.
+3. Click **New** in the User Libraries window.
+4. Name the library (like &quot;CLAVIN&quot;), and press **OK**.
+5. Select the new library, and press **Add External JARs...**.
+6. **Browse** for the `$JARD` file.
+7. Select the the `$JARD` file and click **Open**.
+8. (Optional) Import the Source JAR - expand the CLAVIN JAR, select **Source attachment** and press the **Edit** button on the right.  Select **External location** and press **External File...**.  Navigate to the `$JARS` file and click **Open** and then press **OK**.
+9. (Optional) Import the JavaDoc JAR - select **Javadoc location** and press the **Edit** button on the right.  Select **Javadoc in archive**, select **External file** and press **Browse** to the right of the **Archive path** textbox.  Navigate to the `$JARJ` file and click **Open** and then press **OK**.
+10. Verify the results, and press **OK**.  Check the box next to the library, and then press **Finish**.
+
+You should now be able to use CLAVIN within Eclipse.
+
+If you are having trouble following along, the process should look something like this (though these screenshots were taken on a Mac with SpringSource Tool Suite):
+
+<table>
+  <tr>
+    <td>1. Add Libraries</td>
+    <td>2. Add User Library</td>
+    <td>3. Add New User Library</td>
+    <td>4. Name the Library</td>
+  </tr>
+  <tr>
+    <td>
+       <a href="../images/eclipse-user-lib/add-libraries.png" target="_blank">
+       <img src="../images/eclipse-user-lib/add-libraries.png" 
+            style="max-height: 150px; max-width: 150px" />
+       </a>
+    </td>
+    <td>
+       <a href="../images/eclipse-user-lib/add-user-library.png" target="_blank">
+       <img src="../images/eclipse-user-lib/add-user-library.png" 
+            style="max-height: 150px; max-width: 150px" />
+       </a>
+    </td>
+    <td>
+       <a href="../images/eclipse-user-lib/click-new-library.png" target="_blank">
+       <img src="../images/eclipse-user-lib/click-new-library.png" 
+            style="max-height: 150px; max-width: 150px" />
+       </a>
+    </td>
+    <td>
+       <a href="../images/eclipse-user-lib/name-user-library.png" target="_blank">
+       <img src="../images/eclipse-user-lib/name-user-library.png" 
+            style="max-height: 150px; max-width: 150px" />
+       </a>
+    </td>
+  </tr>
+  <tr>
+    <td>5. Add External JAR</td>
+    <td>6. Browse for the JAR.</td>
+    <td>7. Import the compiled JAR.</td>
+    <td>8. Import Source JAR.</td>
+  </tr>
+  <tr>
+    <td>
+       <a href="../images/eclipse-user-lib/add-external-jar.png" target="_blank">
+       <img src="../images/eclipse-user-lib/add-external-jar.png" 
+            style="max-height: 150px; max-width: 150px" />
+       </a>
+    </td>
+    <td>
+       <a href="../images/eclipse-user-lib/browse-for-jar.png" target="_blank">
+       <img src="../images/eclipse-user-lib/browse-for-jar.png" 
+            style="max-height: 150px; max-width: 150px" />
+       </a>
+    </td>
+    <td>
+       <a href="../images/eclipse-user-lib/select-jar-with-deps.png" target="_blank">
+       <img src="../images/eclipse-user-lib/select-jar-with-deps.png" 
+            style="max-height: 150px; max-width: 150px" />
+       </a>
+    </td>
+    <td>
+       <a href="../images/eclipse-user-lib/select-sources.png" target="_blank">
+       <img src="../images/eclipse-user-lib/select-sources.png" 
+            style="max-height: 150px; max-width: 150px" />
+       </a>
+    </td>
+  </tr>
+  <tr>
+    <td>9. Import JavaDoc JAR.</td>
+    <td>10. Verify and Finish.</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>
+       <a href="../images/eclipse-user-lib/select-javadoc.png" target="_blank">
+       <img src="../images/eclipse-user-lib/select-javadoc.png" 
+            style="max-height: 150px; max-width: 150px" />
+       </a>
+    </td>
+    <td>
+       <a href="../images/eclipse-user-lib/results.png" target="_blank">
+       <img src="../images/eclipse-user-lib/results.png" 
+            style="max-height: 150px; max-width: 150px" />
+       </a>
+    </td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+
+$H$H Importing CLAVIN via Apache Maven
+
+Alternatively, you can import CLAVIN into your project using Apache Maven.
+
+**Please note:**  You will still need to build the Lucene Index before using CLAVIN.  Please follow steps 3 through 6 in **Building CLAVIN from source** above to accomplish this task.
+
+Add a dependency to CLAVIN in your project\'s `pom.xml` file:
+
+```
+<dependency>
+   <groupId>com.bericotech</groupId>
+   <artifactId>clavin</artifactId>
+   <version>$project.version</version>
+</dependency>
+```

@@ -17,7 +17,6 @@
   <description>CLAVIN (Cartographic Location And Vicinity INdexer) 
   is an open source software package for geographic entity resolution 
   from text.</description>
-  <url>http://clavin.bericotechnologies.com</url>
   
   <licenses>
     <license>

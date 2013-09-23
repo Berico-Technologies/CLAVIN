@@ -8,7 +8,7 @@ import org.apache.lucene.queryparser.classic.ParseException;
 import com.bericotech.clavin.extractor.ApacheExtractor;
 import com.bericotech.clavin.extractor.LocationExtractor;
 import com.bericotech.clavin.resolver.LocationResolver;
-import com.bericotech.clavin.resolver.lucene.LuceneLocationResolver;
+import com.bericotech.clavin.resolver.LuceneLocationResolver;
 
 /*#####################################################################
  * 

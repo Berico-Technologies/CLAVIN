@@ -9,6 +9,10 @@ import java.math.BigInteger;
 import java.util.Random;
 
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.bericotech.clavin.GeoParser;
 
 /*#####################################################################
  * 
@@ -44,7 +48,9 @@ import org.junit.Test;
  * 
  */
 public class DamerauLevenshteinTest {
-
+    
+    private static final Logger logger = LoggerFactory.getLogger(GeoParser.class);
+    
     /**
      * Simple tests to make sure we're getting the correct edit distance
      * for all the different edit operations, and a "smoke test" to

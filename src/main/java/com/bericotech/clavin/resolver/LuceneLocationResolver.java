@@ -1,4 +1,4 @@
-package com.bericotech.clavin.resolver.lucene;
+package com.bericotech.clavin.resolver;
 
 import static org.apache.lucene.queryparser.classic.QueryParserBase.escape;
 
@@ -26,8 +26,6 @@ import org.slf4j.LoggerFactory;
 import com.bericotech.clavin.gazetteer.CountryCode;
 import com.bericotech.clavin.index.BinarySimilarity;
 import com.bericotech.clavin.index.WhitespaceLowerCaseAnalyzer;
-import com.bericotech.clavin.resolver.LocationResolver;
-import com.bericotech.clavin.resolver.ResolvedLocation;
 import com.bericotech.clavin.util.ListUtils;
 
 /*#####################################################################
@@ -137,7 +135,7 @@ public class LuceneLocationResolver implements LocationResolver {
     private List<ResolvedLocation> getCandidateMatches(LocationOccurrence locationName, boolean fuzzy)
             throws IOException, ParseException{
         // santize the query input
-        String sanitizedLocationName = escape(locationName.name.toLowerCase());
+        String sanitizedLocationName = escape(locationName.text.toLowerCase());
         
         try{
             // Lucene query used to look for matches based on the
@@ -189,20 +187,20 @@ public class LuceneLocationResolver implements LocationResolver {
                     // drats, foiled again! no fuzzy matches found either!
                     // in this case, we'll return an empty list of
                     // candidate matches
-                    logger.debug("No match found for: '{}'", locationName.name);
+                    logger.debug("No match found for: '{}'", locationName.text);
                 }
             } else {
                 // no matches found and fuzzy matching is turned off
-                logger.debug("No match found for: '{}'", locationName.name);
+                logger.debug("No match found for: '{}'", locationName.text);
             }
             
             return candidateMatches;
             
         } catch (ParseException e) {
-            logger.error(String.format("Error resolving location for : '%s'", locationName.name), e);
+            logger.error(String.format("Error resolving location for : '%s'", locationName.text), e);
             throw e;
         } catch (IOException e) {
-            logger.error(String.format("Error resolving location for : '%s'", locationName.name), e);
+            logger.error(String.format("Error resolving location for : '%s'", locationName.text), e);
             throw e;
         }
     }

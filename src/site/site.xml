@@ -13,31 +13,33 @@
     </fluidoSkin>
   </custom>
   <publishDate position="right" />
-  <version position="right"/>
+  <version position="right" />
   <poweredBy>
         <logo name="Maven" href="http://maven.apache.org/"
-              img="http://maven.apache.org/images/logos/maven-feather.png"/>
+              img="http://maven.apache.org/images/logos/maven-feather.png" />
   </poweredBy>
   <body>
     <breadcrumbs>
-      <item name="Berico Technologies" href="http://bericotech.com"/>
-      <item name="Fork Me on GitHub" href="http://github.com/Berico-Technologies/CLAVIN"/>
+      <item name="CLAVIN Home" href="http://clavin.bericotechnologies.com" />
+      <item name="Berico Technologies" href="http://bericotech.com" />
+      <item name="Fork Me on GitHub" href="http://github.com/Berico-Technologies/CLAVIN" />
     </breadcrumbs>
     <menu>
-        <item name="Overview" href="index.html"  />
-        <item name="Roadmap" href="roadmap.html"  />
+        <item name="Overview" href="index.html" />
+        <item name="Roadmap" href="roadmap.html" />
     </menu>
     <menu name="Tutorials">
         <item name="Installation" href="tutorials/installation.html" />
         <item name="5-Minute Tutorial" href="tutorials/fivemin-tutorial.html" />
     </menu>
     <menu name="Changelog">
-        <item name="v1.0.x" href="changelog/changes-v1.0.x.html" />
+        <item name="v1.0.0" href="changelog/changes-v1.0.0.html" />
     </menu>
-    <menu name="Documentation">
-      <item name="How CLAVIN Works" href="documentation/how-clavin-works.html" />
+    <menu name="How CLAVIN Works">
+      <item name="Geospatial Data Model" href="documentation/geospatial-data-model.html" />
+      <item name="Processing Workflow" href="documentation/processing-workflow.html" />
     </menu>
-    <menu name="Maven Information" ref="reports" />
+    <menu name="Documentation" ref="reports" />
   </body>
   
 </project>
