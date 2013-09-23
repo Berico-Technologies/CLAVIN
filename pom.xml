@@ -4,7 +4,7 @@
   
   <groupId>com.bericotech</groupId>
   <artifactId>clavin</artifactId>
-  <version>1.0.0rc6</version>
+  <version>1.0.0rc7</version>
   <packaging>jar</packaging>
   
   <parent>
@@ -130,6 +130,19 @@
     <tag>master</tag>
     <url>https://github.com/Berico-Technologies/CLAVIN</url>
   </scm>
+  
+  <mailingLists>
+    <mailingList>
+      <name>CLAVIN Users</name>
+      <post>clavin-users@googlegroups.com</post>
+      <archive>https://groups.google.com/forum/#!forum/clavin-users</archive>
+    </mailingList>
+    <mailingList>
+      <name>CLAVIN Developers</name>
+      <post>clavin-developers@googlegroups.com</post>
+      <archive>https://groups.google.com/forum/#!forum/clavin-developers</archive>
+    </mailingList>    
+  </mailingLists>
   
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

@@ -4,7 +4,7 @@ CLAVIN, at its core, is a tool for deriving geospatial information from text dat
 
 ### Gazetteer Model
 
-CLAVIN's worldwide view of geospatial "ground truth" is represented by the gazetteer model. It contains a massive collection of **named locations** -- the cities, countries, mountains, rivers, airports, etc. that you are most likely using CLAVIN to find. It also contains a semantic model for describing these geospatial entities. CLAVIN's gazetteer model is primarily based on the [GeoNames.org](http://geonames.org) geographical database.
+CLAVIN\'s worldwide view of geospatial "ground truth" is represented by the gazetteer model. It contains a massive collection of **named locations** -- the cities, countries, mountains, rivers, airports, etc. that you are most likely using CLAVIN to find. It also contains a semantic model for describing these geospatial entities. CLAVIN's gazetteer model is primarily based on the [GeoNames.org](http://geonames.org) geographical database.
 
 The gazetteer model located in the `com.bericotech.clavin.gazetteer` package contains these elements:
 

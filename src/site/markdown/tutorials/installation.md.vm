@@ -46,7 +46,7 @@ If you encounter an error that looks like this:
     ... InvocationTargetException: Java heap space ...
 set the appropriate environmental variable controlling Maven's memory usage, and increase the size with `export MAVEN_OPTS=-Xmx3g` or similar.
 
-Once that all runs successfully, feel free to modify the CLAVIN source code to suit your needs, or import CLAVIN's functionality into your own program using the .jar file created in Step 7 (we recommend the `clavin-x.x.x-jar-with-dependencies.jar` file for ease of use).
+Once that all runs successfully, feel free to modify the CLAVIN source code to suit your needs, or import CLAVIN\'s functionality into your own program using the .jar file created in Step 7 (we recommend the `clavin-x.x.x-jar-with-dependencies.jar` file for ease of use).
 
 **Please note:** Loading the worldwide gazetteer uses a non-trivial amount of memory. When using CLAVIN in your own programs, if you encounter `Java heap space` errors (like the one described in Step 8), bump up the maximum heap size for your JVM. Allocating 2GB (e.g., `-Xmx2g`) is a good place to start.
 

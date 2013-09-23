@@ -6,7 +6,7 @@ CLAVIN\'s process for processing text consists of two distinct phases:
 
 **Extraction** - CLAVIN uses a `LocationExtractor` to extract location name strings from text, producing a list a `LocationOccurrence` objects
 
-**Resolution** - Taking the results of the extractor, CLAVIN's `LocationResolver` resolves each `LocationOccurrence` to the most likely `GeoName` it represents, yielding a `ResolvedLocation`
+**Resolution** - Taking the results of the extractor, CLAVIN\'s `LocationResolver` resolves each `LocationOccurrence` to the most likely `GeoName` it represents, yielding a `ResolvedLocation`
 
 The Extraction and Resolution phases can be broken down even futher. These are the discrete steps comprising the entire processing workflow
 
