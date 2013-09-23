@@ -47,7 +47,7 @@ import com.bericotech.clavin.resolver.ResolvedLocation;
 /**
  * Tests the mapping of location names into
  * {@link ResolvedLocation} objects as performed by
- * {@link LocationResolver#resolveLocations(List<String>)}.
+ * {@link LocationResolver#resolveLocations(List, boolean)}.
  */
 public class LuceneLocationResolverHeuristicsTest {
     

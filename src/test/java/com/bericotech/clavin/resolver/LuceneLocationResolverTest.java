@@ -93,7 +93,7 @@ public class LuceneLocationResolverTest {
     }
 
     /**
-     * Ensure {@link LuceneLocationResolver#resolveLocations(List)} isn't
+     * Ensure {@link LuceneLocationResolver#resolveLocations(List, boolean)} isn't
      * choking on input.
      * 
      * @throws IOException
