@@ -1,0 +1,39 @@
+
+
+<assembly>
+  <id>bin</id>
+  <formats>
+    <format>tar.gz</format>
+    <format>zip</format>   
+  </formats>
+  <fileSets>
+    <fileSet>
+      <includes>
+        <include>README*</include>
+        <include>LICENSE*</include>
+        <include>NOTICE*</include>
+      </includes>
+    </fileSet>
+    <fileSet>
+      <directory>target</directory>
+      <outputDirectory>lib</outputDirectory>
+      <includes>
+        <include>clavin*.jar</include>
+      </includes>
+    </fileSet>
+    <fileSet>
+      <directory>target</directory>
+      <outputDirectory>docs</outputDirectory>
+      <includes>
+        <include>site/*</include>
+      </includes>
+    </fileSet>
+    <fileSet>
+      <directory>bin</directory>
+      <outputDirectory>bin</outputDirectory>
+      <includes>
+        <include>clavin</include>
+      </includes>
+    </fileSet>
+  </fileSets>  
+</assembly>

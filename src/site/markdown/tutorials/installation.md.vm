@@ -11,89 +11,46 @@
 
 $H Installation
 
-CLAVIN (the core) is not designed to be a standalone component, rather bundled in another application of processing pipeline.  A common use case is to integrate CLAVIN with Apache Hadoop or Twitter Storm.
+CLAVIN is not designed to be a standalone application, but rather as a library component bundled into other applications as part of an ingest or processing pipeline. A common use case is to integrate CLAVIN with Apache Hadoop or Twitter Storm to extract and resolve location names from unstructured text documents, then adding the geospatial entities created by CLAVIN as facets in a document index.
 
 This section will discuss mechanisms for quickly integrating CLAVIN with a JVM-based project.
 
-$H$H$H Using CLAVIN via Maven
+$H$H Building CLAVIN from source
 
-You will need to build an index before using CLAVIN.  Please follow the instructions on [Building a Gazetteer Index from Geonames](../documentation/geonames-indexing.html) to accomplish this task.
+In this example, we will checkout (or download) the CLAVIN source code from GitHub, and compile the project using Apache Maven.
 
-Reference the Berico Technologies Nexus Repository in your Maven `pom.xml`:
+$H$H$H$H Step 1.  Checkout the CLAVIN project from GitHub:
+    git clone https://github.com/Berico-Technologies/CLAVIN.git
 
-```
-<repositories>
-  <repository>
-     <id>nexus.bericotechnologies.com</id>
-     <name>Berico Technologies Nexus</name>
-     <url>http://nexus.bericotechnologies.com/content/groups/public</url>
-     <releases><enabled>true</enabled></releases>
-     <snapshots><enabled>true</enabled></snapshots>
-  </repository>
-</repositories>
-```
+$H$H$H$H Step 2. Move into the newly-created CLAVIN directory:
+    cd CLAVIN
 
-Add a dependency within your `pom.xml` to the CLAVIN project:
+$H$H$H$H Step 3. Download the latest version of the worldwide gazetteer file from GeoNames.org:
+    curl http://download.geonames.org/export/dump/allCountries.zip -o allCountries.zip
 
-```
-<dependency>
-   <groupId>com.berico</groupId>
-   <artifactId>clavin</artifactId>
-   <version>$project.version</version>
-</dependency>
-```
+$H$H$H$H Step 4. Unzip the GeoNames gazetteer file:
+    unzip allCountries.zip
 
-$H$H$H Building CLAVIN from source and referencing the JAR in Eclipse
+$H$H$H$H Step 5. Compile the source code:
+    mvn compile
 
-In this example, we will checkout (or download) the code from GitHub, compile the project via Maven, and add it as a build dependency in Eclipse.
+$H$H$H$H Step 6. Create the Lucene Index (this one-time process will take several minutes):
+    MAVEN_OPTS="-Xmx2048M" mvn exec:java -Dexec.mainClass="com.bericotech.clavin.index.IndexDirectoryBuilder"
 
-$H$H$H$H 1a.  Checkout the CLAVIN project from GitHub.
+$H$H$H$H Step 7. Build the CLAVIN package:
+    mvn package
 
-```
-git clone https://github.com/Berico-Technologies/CLAVIN.git
-cd CLAVIN
-```
+$H$H$H$H Step 8. Run the example program:
+    MAVEN_OPTS="-Xmx2048M" mvn exec:java -Dexec.mainClass="com.bericotech.clavin.WorkflowDemo"
+If you encounter an error that looks like this:
+    ... InvocationTargetException: Java heap space ...
+set the appropriate environmental variable controlling Maven's memory usage, and increase the size with `export MAVEN_OPTS=-Xmx3g` or similar.
 
-$H$H$H$H 1b.  Download the CLAVIN project as a ZIP file from GitHub.
+Once that all runs successfully, feel free to modify the CLAVIN source code to suit your needs, or import CLAVIN\'s functionality into your own program using the .jar file created in Step 7 (we recommend the `clavin-x.x.x-jar-with-dependencies.jar` file for ease of use).
 
-The url location for the latest tagged branch should be: $D.
+**Please note:** Loading the worldwide gazetteer uses a non-trivial amount of memory. When using CLAVIN in your own programs, if you encounter `Java heap space` errors (like the one described in Step 8), bump up the maximum heap size for your JVM. Allocating 2GB (e.g., `-Xmx2g`) is a good place to start.
 
-```
-wget $D
-unzip $F
-cd $B
-```
-
-$H$H$H$H 2.  Compile and package CLAVIN.
-
-```
-mvn package
-```
-
-Hopefully, all the test will pass (like they should) and you will have a pristine JAR waiting for you in the `target` directory.  If we screwed something up, and you want to temp fate, you are welcome to skip the tests:
-
-```
-mvn package -DskipTests
-```
-
-$H$H$H$H 3.  Acquire the compiled JAR.
-
-In the `target` directory, you should have the following JARs:
-
--  $JAR - JAR with only the compiled classes and embedded resources.
--  $JARD - JAR with CLAVIN&#39;s dependencies bundled (a.k.a. 'Fat JAR').
--  $JARS - JAR with the source files.
--  $JARJ - JAR with JavaDocs.
-
-If you so desire, you can move these libraries to the location of your choice:
-
-```
-cp target/$JARD /my/library/location/
-```
-
-Where ever you keep these files, you will need to know the location to import the libraries into Eclipse.
-
-$H$H$H$H 4.  Import CLAVIN into Eclipse as a User Library.
+$H$H Importing CLAVIN into Eclipse as a user library
 
 Assuming you have Eclipse started and you are importing CLAVIN into an existing project:
 
@@ -107,6 +64,8 @@ Assuming you have Eclipse started and you are importing CLAVIN into an existing 
 8. (Optional) Import the Source JAR - expand the CLAVIN JAR, select **Source attachment** and press the **Edit** button on the right.  Select **External location** and press **External File...**.  Navigate to the `$JARS` file and click **Open** and then press **OK**.
 9. (Optional) Import the JavaDoc JAR - select **Javadoc location** and press the **Edit** button on the right.  Select **Javadoc in archive**, select **External file** and press **Browse** to the right of the **Archive path** textbox.  Navigate to the `$JARJ` file and click **Open** and then press **OK**.
 10. Verify the results, and press **OK**.  Check the box next to the library, and then press **Finish**.
+
+You should now be able to use CLAVIN within Eclipse.
 
 If you are having trouble following along, the process should look something like this (though these screenshots were taken on a Mac with SpringSource Tool Suite):
 
@@ -199,6 +158,18 @@ If you are having trouble following along, the process should look something lik
   </tr>
 </table>
 
-$H$H$H$H 5.  You're finished!
+$H$H Importing CLAVIN via Apache Maven
 
-You should now be able to use CLAVIN with Eclipse.
+Alternatively, you can import CLAVIN into your project using Apache Maven.
+
+**Please note:**  You will still need to build the Lucene Index before using CLAVIN.  Please follow steps 3 through 6 in **Building CLAVIN from source** above to accomplish this task.
+
+Add a dependency to CLAVIN in your project\'s `pom.xml` file:
+
+```
+<dependency>
+   <groupId>com.bericotech</groupId>
+   <artifactId>clavin</artifactId>
+   <version>$project.version</version>
+</dependency>
+```
