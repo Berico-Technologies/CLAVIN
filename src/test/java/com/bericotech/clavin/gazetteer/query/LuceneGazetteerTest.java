@@ -59,14 +59,14 @@ public class LuceneGazetteerTest {
     private QueryBuilder queryBuilder;
 
     // expected geonameID numbers for given location names
-    int BOSTON_MA = 4930956;
-    int RESTON_VA = 4781530;
-    int FAIRFAX_COUNTY_VA = 4758041;
-    int VIRGINIA = 6254928;
-    int UNITED_STATES = 6252001;
-    int STRAßENHAUS_DE = 2826158;
-    int GUN_BARREL_CITY_TX = 4695535;
-    int USSR = 8354411;
+    long BOSTON_MA = 4930956;
+    long RESTON_VA = 4781530;
+    long FAIRFAX_COUNTY_VA = 4758041;
+    long VIRGINIA = 6254928;
+    long UNITED_STATES = 6252001;
+    long STRAßENHAUS_DE = 2826158;
+    long GUN_BARREL_CITY_TX = 4695535;
+    long USSR = 8354411;
 
     //this convenience method turns an array of location name strings into a list of occurrences with fake positions.
     //(useful for tests that don't care about position in the document)
@@ -141,12 +141,12 @@ public class LuceneGazetteerTest {
         assertNotNull("Null results list received from Gazetteer", locs);
         assertEquals("Expected single result from Gazetteer", 1, locs.size());
         GeoName geo = locs.get(0).getGeoname();
-        List<Integer> ancestryPath = new ArrayList<Integer>();
+        List<Long> ancestryPath = new ArrayList<Long>();
         while (geo != null) {
             ancestryPath.add(geo.getGeonameID());
             geo = geo.getParent();
         }
-        List<Integer> expectedAncestryPath = Arrays.asList(RESTON_VA, FAIRFAX_COUNTY_VA, VIRGINIA, UNITED_STATES);
+        List<Long> expectedAncestryPath = Arrays.asList(RESTON_VA, FAIRFAX_COUNTY_VA, VIRGINIA, UNITED_STATES);
         assertEquals("Expected ancestry path of Reston, Fairfax County, Virginia, United States", expectedAncestryPath, ancestryPath);
     }
 
@@ -306,14 +306,14 @@ public class LuceneGazetteerTest {
         queryBuilder.maxResults(200).location("london");
 
         List<ResolvedLocation> unfiltered = instance.getClosestLocations(queryBuilder.filterDupes(false).build());
-        Set<Integer> unfilteredIds = new HashSet<Integer>();
+        Set<Long> unfilteredIds = new HashSet<Long>();
         for (ResolvedLocation loc : unfiltered) {
             unfilteredIds.add(loc.getGeoname().getGeonameID());
         }
         assertNotEquals("Expected fewer IDs than results for unfiltered query.", unfiltered.size(), unfilteredIds.size());
 
         List<ResolvedLocation> filtered = instance.getClosestLocations(queryBuilder.filterDupes(true).build());
-        Set<Integer> filteredIds = new HashSet<Integer>();
+        Set<Long> filteredIds = new HashSet<Long>();
         for (ResolvedLocation loc : filtered) {
             filteredIds.add(loc.getGeoname().getGeonameID());
         }

@@ -101,7 +101,7 @@ public class IndexDirectoryBuilder {
 
     private final Map<String, GeoName> adminMap;
     private final Map<String, Set<GeoName>> unresolvedMap;
-    private final Map<Integer, AlternateName> alternateNameMap;
+    private final Map<Long, AlternateName> alternateNameMap;
     private final boolean fullAncestry;
 
     private IndexWriter indexWriter;
@@ -110,7 +110,7 @@ public class IndexDirectoryBuilder {
     private IndexDirectoryBuilder(final boolean fullAncestryIn) {
         adminMap = new TreeMap<String, GeoName>();
         unresolvedMap = new TreeMap<String, Set<GeoName>>();
-        alternateNameMap = new HashMap<Integer, AlternateName>();
+        alternateNameMap = new HashMap<Long, AlternateName>();
         this.fullAncestry = fullAncestryIn;
     }
 
@@ -397,7 +397,7 @@ public class IndexDirectoryBuilder {
         // reuse a single Document and field instances
         Document doc = new Document();
         doc.add(new StoredField(GEONAME.key(), fullAncestry ? geoName.getGazetteerRecordWithAncestry() : geoName.getGazetteerRecord()));
-        doc.add(new IntField(GEONAME_ID.key(), geoName.getGeonameID(), Field.Store.YES));
+        doc.add(new LongField(GEONAME_ID.key(), geoName.getGeonameID(), Field.Store.YES));
         // if the alternate names file was loaded and we found a preferred name for this GeoName, store it
         if (preferredName != null) {
             doc.add(new StoredField(PREFERRED_NAME.key(), preferredName.name));
@@ -405,13 +405,13 @@ public class IndexDirectoryBuilder {
         // index the direct parent ID in the PARENT_ID field
         GeoName parent = geoName.getParent();
         if (parent != null) {
-            doc.add(new IntField(PARENT_ID.key(), parent.getGeonameID(), Field.Store.YES));
+            doc.add(new LongField(PARENT_ID.key(), parent.getGeonameID(), Field.Store.YES));
         }
         // index all ancestor IDs in the ANCESTOR_IDS field; this is a secondary field
         // so it can be used to restrict searches and PARENT_ID can be used for ancestor
         // resolution
         while (parent != null) {
-            doc.add(new IntField(ANCESTOR_IDS.key(), parent.getGeonameID(), Field.Store.YES));
+            doc.add(new LongField(ANCESTOR_IDS.key(), parent.getGeonameID(), Field.Store.YES));
             parent = parent.getParent();
         }
         doc.add(new LongField(POPULATION.key(), geoName.getPopulation(), Field.Store.YES));
@@ -612,7 +612,7 @@ public class IndexDirectoryBuilder {
     }
 
     private static class AlternateName implements Comparable<AlternateName> {
-        private final long geonameID;
+        private final long geonameId;
         private final String name;
         private final String lang;
         private final boolean preferredName;
@@ -638,11 +638,11 @@ public class IndexDirectoryBuilder {
 
         @Override
         public int compareTo(final AlternateName other) {
-            int comp = geonameId - other.geonameId;
+            long comp = geonameId - other.geonameId;
             comp = comp == 0 ? Boolean.compare(preferredName, other.preferredName) : comp;
             comp = comp == 0 ? Boolean.compare(shortName, other.shortName) : comp;
             comp = comp == 0 ? name.compareTo(other.name) : comp;
-            return comp;
+            return (int) comp;
         }
 
         /**

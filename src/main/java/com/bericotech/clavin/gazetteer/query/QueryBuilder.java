@@ -112,7 +112,7 @@ public class QueryBuilder {
     private FuzzyMode fuzzyMode = DEFAULT_FUZZY_MODE;
     private boolean includeHistorical = DEFAULT_INCLUDE_HISTORICAL;
     private boolean filterDupes = DEFAULT_FILTER_DUPES;
-    private Set<Integer> parentIds = new HashSet<Integer>();
+    private Set<Long> parentIds = new HashSet<Long>();
     private Set<FeatureCode> featureCodes = EnumSet.noneOf(FeatureCode.class);
 
     /**
@@ -230,7 +230,7 @@ public class QueryBuilder {
      * queries.
      * @return the current set of parent IDs used to constrain the query results
      */
-    public Set<Integer> parentIds() {
+    public Set<Long> parentIds() {
         return Collections.unmodifiableSet(parentIds);
     }
 
@@ -241,8 +241,8 @@ public class QueryBuilder {
      * @param ids the new set of parent IDs used to constrain the query results
      * @return this
      */
-    public QueryBuilder parentIds(final Set<Integer> ids) {
-        parentIds = new HashSet<Integer>();
+    public QueryBuilder parentIds(final Set<Long> ids) {
+        parentIds = new HashSet<Long>();
         if (ids != null) {
             parentIds.addAll(ids);
         }
@@ -254,7 +254,7 @@ public class QueryBuilder {
      * @param id the parent ID to add
      * @return this
      */
-    public QueryBuilder addParentIds(final Integer id) {
+    public QueryBuilder addParentIds(final Long id) {
         parentIds.add(id);
         return this;
     }
@@ -265,7 +265,7 @@ public class QueryBuilder {
      * @param ids the subsequent parent IDs to add
      * @return this
      */
-    public QueryBuilder addParentIds(final Integer id1, final Integer... ids) {
+    public QueryBuilder addParentIds(final Long id1, final Long... ids) {
         parentIds.add(id1);
         parentIds.addAll(Arrays.asList(ids));
         return this;
@@ -276,7 +276,7 @@ public class QueryBuilder {
      * @param ids the parent IDs to add
      * @return this
      */
-    public QueryBuilder addParentIds(final Collection<Integer> ids) {
+    public QueryBuilder addParentIds(final Collection<Long> ids) {
         if (ids != null) {
             parentIds.addAll(ids);
         }
@@ -322,7 +322,7 @@ public class QueryBuilder {
      * @return this
      */
     public QueryBuilder clearParentIds() {
-        parentIds = new HashSet<Integer>();
+        parentIds = new HashSet<Long>();
         return this;
     }
 

@@ -313,7 +313,7 @@ public class MultipartLocationResolver {
         } else {
             // we found results, process them to configure the filters for the next
             // level of the search and add them to the matches stack
-            Set<Integer> parentIds = new HashSet<Integer>();
+            Set<Long> parentIds = new HashSet<Long>();
             Set<String> parentCodes = new HashSet<String>();
             Set<String> foundParents = new HashSet<String>();
             // only include the first (best) result for each distinct parent in the filter set

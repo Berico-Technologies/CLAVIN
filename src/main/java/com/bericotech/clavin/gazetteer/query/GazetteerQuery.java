@@ -73,7 +73,7 @@ public class GazetteerQuery {
      * Searches should be restricted to locations found in at least
      * one of this set of parents.
      */
-    private final Set<Integer> parentIds;
+    private final Set<Long> parentIds;
 
     /**
      * Searches should be restricted to locations matching one of
@@ -93,14 +93,14 @@ public class GazetteerQuery {
      */
     @SuppressWarnings("unchecked")
     public GazetteerQuery(final LocationOccurrence occurrence, final int maxResults, final FuzzyMode fuzzyMode,
-            final boolean includeHistorical, final boolean filterDupes, final Set<Integer> parentIds,
+            final boolean includeHistorical, final boolean filterDupes, final Set<Long> parentIds,
             final Set<FeatureCode> featureCodes) {
         this.occurrence = occurrence;
         this.maxResults = maxResults;
         this.fuzzyMode = fuzzyMode;
         this.includeHistorical = includeHistorical;
         this.filterDupes = filterDupes;
-        this.parentIds = parentIds != null ? new HashSet<Integer>(parentIds) : Collections.EMPTY_SET;
+        this.parentIds = parentIds != null ? new HashSet<Long>(parentIds) : Collections.EMPTY_SET;
         this.featureCodes = featureCodes != null ? EnumSet.copyOf(featureCodes) : EnumSet.noneOf(FeatureCode.class);
     }
 
@@ -149,7 +149,7 @@ public class GazetteerQuery {
      * Get the set of parents that should be used to restrict the search.
      * @return the IDs of the parents that should be used to restrict the search
      */
-    public Set<Integer> getParentIds() {
+    public Set<Long> getParentIds() {
         return Collections.unmodifiableSet(parentIds);
     }
 

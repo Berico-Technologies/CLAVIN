@@ -86,12 +86,10 @@ public enum IndexField {
                 case PREFERRED_NAME:
                     value = field.stringValue();
                     break;
-                case GEONAME_ID:
                 case PARENT_ID:
                 case ANCESTOR_IDS:
-                    value = field.numericValue().intValue();
-                    break;
                 case POPULATION:
+                case GEONAME_ID:
                     value = field.numericValue().longValue();
                     break;
                 case SORT_POP:

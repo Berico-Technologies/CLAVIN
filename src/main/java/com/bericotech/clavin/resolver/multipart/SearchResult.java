@@ -38,10 +38,10 @@ import java.util.Set;
 public class SearchResult {
     public final SearchLevel level;
     public final List<ResolvedLocation> locations;
-    public final Set<Integer> parentIds;
+    public final Set<Long> parentIds;
     public final Set<String> parentCodes;
 
-    public SearchResult(SearchLevel level, List<ResolvedLocation> locations, Set<Integer> parentIds, Set<String> parentCodes) {
+    public SearchResult(SearchLevel level, List<ResolvedLocation> locations, Set<Long> parentIds, Set<String> parentCodes) {
         this.level = level;
         this.locations = locations;
         this.parentIds = parentIds;

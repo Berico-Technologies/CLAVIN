@@ -325,7 +325,7 @@ public class GeoName {
         String[] tokens = inputLine.split("\t");
 
         // initialize each field with the corresponding token
-        long geonameID = Integer.parseInt(tokens[0]);
+        long geonameID = Long.parseLong(tokens[0]);
         String name = tokens[1];
         String asciiName = tokens[2];
 
@@ -919,7 +919,9 @@ public class GeoName {
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 83 * hash + this.geonameID;
+        // Cast long to int
+        int id = (int) ((this.geonameID >> 32) ^ this.geonameID);
+        hash = 83 * hash + id;
         return hash;
     }
 
