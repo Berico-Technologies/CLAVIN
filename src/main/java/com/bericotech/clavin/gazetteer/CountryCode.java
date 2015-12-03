@@ -293,7 +293,7 @@ public enum CountryCode {
     public final String name;
     
     // unique identifier
-    public final int geonameID;
+    public final long geonameID;
     
     /**
      * Constructor for {@link CountryCode} enum type.
@@ -301,7 +301,7 @@ public enum CountryCode {
      * @param name          country name
      * @param geonameID     unique identifier
      */
-    private CountryCode(String name, int geonameID) {
+    private CountryCode(String name, long geonameID) {
         this.name = name;
         this.geonameID = geonameID;
     }

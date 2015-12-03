@@ -267,7 +267,7 @@ public class LuceneGazetteer implements Gazetteer {
                 Document doc = indexSearcher.doc(scoreDoc.doc);
                 // reuse GeoName instances so all ancestry is correctly resolved if multiple names for
                 // the same GeoName match the query
-                int geonameID = GEONAME_ID.getValue(doc);
+                long geonameID = GEONAME_ID.getValue(doc);
                 GeoName geoname = geonameMap.get(geonameID);
                 if (geoname == null) {
                     geoname = GeoName.parseFromGeoNamesRecord((String) GEONAME.getValue(doc), (String) PREFERRED_NAME.getValue(doc));
@@ -427,7 +427,7 @@ public class LuceneGazetteer implements Gazetteer {
      * @throws ClavinException   if an error occurs
      */
     @Override
-    public GeoName getGeoName(final int geonameId) throws ClavinException {
+    public GeoName getGeoName(final long geonameID) throws ClavinException {
         try {
             GeoName geoName = null;
             // Lucene query used to look for exact match on the "geonameID" field

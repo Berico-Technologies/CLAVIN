@@ -612,7 +612,7 @@ public class IndexDirectoryBuilder {
     }
 
     private static class AlternateName implements Comparable<AlternateName> {
-        private final int geonameId;
+        private final long geonameID;
         private final String name;
         private final String lang;
         private final boolean preferredName;

@@ -93,7 +93,7 @@ public class GeoName {
     );
 
     // id of record in geonames database
-    private final int geonameID;
+    private final long geonameID;
 
     // name of geographical point (utf8)
     private final String name;
@@ -206,7 +206,7 @@ public class GeoName {
      * @param gazetteerRecord           the gazetteer record
      */
     public GeoName(
-            int geonameID,
+            long geonameID,
             String name,
             String asciiName,
             List<String> alternateNames,
@@ -325,7 +325,7 @@ public class GeoName {
         String[] tokens = inputLine.split("\t");
 
         // initialize each field with the corresponding token
-        int geonameID = Integer.parseInt(tokens[0]);
+        long geonameID = Integer.parseInt(tokens[0]);
         String name = tokens[1];
         String asciiName = tokens[2];
 
@@ -732,7 +732,7 @@ public class GeoName {
      * Get the ID of the record in geonames database.
      * @return the ID
      */
-    public int getGeonameID() {
+    public long getGeonameID() {
         return geonameID;
     }
 

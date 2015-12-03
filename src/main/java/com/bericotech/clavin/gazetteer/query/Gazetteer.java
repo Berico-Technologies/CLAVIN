@@ -54,5 +54,5 @@ public interface Gazetteer {
      * @return                    the requested GeoName or <code>null</code> if not found
      * @throws ClavinException    if an error occurs
      */
-    GeoName getGeoName(final int geonameId) throws ClavinException;
+    GeoName getGeoName(final long geonameID) throws ClavinException;
 }
