@@ -338,12 +338,12 @@ public class LuceneGazetteer implements Gazetteer {
         }
 
         // create the parent ID restrictions if we were provided at least one parent ID
-        Set<Integer> parentIds = params.getParentIds();
+        Set<Long> parentIds = params.getParentIds();
         if (!parentIds.isEmpty()) {
             BooleanQuery parentQuery = new BooleanQuery();
             // locations must descend from at least one of the specified parents (OR)
-            for (Integer id : parentIds) {
-                parentQuery.add(NumericRangeQuery.newIntRange(ANCESTOR_IDS.key(), id, id, true, true), Occur.SHOULD);
+            for (Long id : parentIds) {
+                parentQuery.add(NumericRangeQuery.newLongRange(ANCESTOR_IDS.key(), id, id, true, true), Occur.SHOULD);
             }
             queryParts.add(parentQuery);
         }
