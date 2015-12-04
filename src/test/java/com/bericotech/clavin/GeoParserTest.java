@@ -44,9 +44,9 @@ import com.bericotech.clavin.resolver.ResolvedLocation;
 public class GeoParserTest {
     
     // expected geonameID numbers for given location names
-    int UNITED_STATES = 6252001;
-    int VERMONT = 5242283;
-    int MASSACHUSETTS = 6254926;
+    long UNITED_STATES = 6252001L;
+    long VERMONT = 5242283L;
+    long MASSACHUSETTS = 6254926L;
     
     /**
      * Ensures we're getting good output from the end-to-end GeoParser

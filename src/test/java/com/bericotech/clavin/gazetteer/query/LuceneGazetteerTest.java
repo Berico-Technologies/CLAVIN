@@ -59,14 +59,14 @@ public class LuceneGazetteerTest {
     private QueryBuilder queryBuilder;
 
     // expected geonameID numbers for given location names
-    long BOSTON_MA = 4930956;
-    long RESTON_VA = 4781530;
-    long FAIRFAX_COUNTY_VA = 4758041;
-    long VIRGINIA = 6254928;
-    long UNITED_STATES = 6252001;
-    long STRAßENHAUS_DE = 2826158;
-    long GUN_BARREL_CITY_TX = 4695535;
-    long USSR = 8354411;
+    long BOSTON_MA = 4930956L;
+    long RESTON_VA = 4781530L;
+    long FAIRFAX_COUNTY_VA = 4758041L;
+    long VIRGINIA = 6254928L;
+    long UNITED_STATES = 6252001L;
+    long STRAßENHAUS_DE = 2826158L;
+    long GUN_BARREL_CITY_TX = 4695535L;
+    long USSR = 8354411L;
 
     //this convenience method turns an array of location name strings into a list of occurrences with fake positions.
     //(useful for tests that don't care about position in the document)

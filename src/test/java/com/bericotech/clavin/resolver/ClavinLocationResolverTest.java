@@ -54,10 +54,10 @@ public class ClavinLocationResolverTest {
     private static final int NO_HEURISTICS_MAX_CONTEXT_WINDOW = 1;
 
     // expected geonameID numbers for given location names
-    private static final int BOSTON_MA = 4930956;
-    private static final int RESTON_VA = 4781530;
-    private static final int STRAßENHAUS_DE = 2826158;
-    private static final int GUN_BARREL_CITY_TX = 4695535;
+    private static final long BOSTON_MA = 4930956L;
+    private static final long RESTON_VA = 4781530L;
+    private static final long STRAßENHAUS_DE = 2826158L;
+    private static final long GUN_BARREL_CITY_TX = 4695535L;
 
     // objects required for running tests
     private ClavinLocationResolver resolver;
