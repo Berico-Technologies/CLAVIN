@@ -262,7 +262,7 @@ public class LuceneGazetteerTest {
             new Object[]{GUN_BARREL_CITY_TX, "Gun Barrell City, TX"}
         };
         for (Object[] test : testCases) {
-            GeoName geoname = instance.getGeoName((Integer) test[0]);
+            GeoName geoname = instance.getGeoName((Long) test[0]);
             assertNotNull(String.format("Unexpected null returned by Gazetteer for '%s'", test[1]), geoname);
             assertEquals(String.format("Expected GeoName ID [%d] for '%s'", test[0], test[1]), test[0], geoname.getGeonameID());
         }

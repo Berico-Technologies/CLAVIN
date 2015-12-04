@@ -54,81 +54,81 @@ import org.junit.runners.Parameterized.Parameters;
 @RunWith(Parameterized.class)
 public class MultipartLocationResolverTest {
     // expected geonameID numbers for given location names
-    private static final int UNITED_STATES = 6252001;
-        private static final int MASSACHUSETTS = 6254926;
-            private static final int BOSTON_MA = 4930956;
-            private static final int HAVERHILL_MA = 4939085;
-            private static final int WORCESTER_MA = 4956184;
-            private static final int SPRINGFIELD_MA = 4951788;
-        private static final int MISSOURI = 4398678;
-            private static final int SPRINGFIELD_MO = 4409896;
-        private static final int ILLINOIS = 4896861;
-            private static final int SPRINGFIELD_IL = 4250542;
-        private static final int VIRGINIA = 6254928;
-            private static final int FAIRFAX_COUNTY_VA = 4758041;
-            private static final int RESTON_VA = 4781530;
-            private static final int SPRINGFIELD_VA = 4787117;
-        private static final int OREGON = 5744337;
-            private static final int SPRINGFIELD_OR = 5754005;
-        private static final int DELAWARE = 4142224;
-            private static final int BETHEL_DE_US = 4141443;
-    private static final int GERMANY = 2921044;
-        private static final int NR_WESTPHALIA = 2861876; // state of North Rhine-Westphalia
-            private static final int BETHEL_GER = 2949766;
-    private static final int UNITED_KINGDOM = 2635167;
-        private static final int ENGLAND = 6269131;
-            private static final int LONDON_UK_41 = 2643741;
-            private static final int LONDON_UK_43 = 2643743;
-            private static final int HAVERHILL_UK = 2647310;
-            private static final int WORCESTER_UK = 2633563;
-        private static final int OXFORDSHIRE = 2640726;
-            private static final int OXFORD_UK = 2640729;
-    private static final int CANADA = 6251999;
-        private static final int ONTARIO = 6093943;
-            private static final int LONDON_ON = 6058560;
-    private static final int PHILIPPINES = 1694008;
-        private static final int DAVAO = 7521309;
-        private static final int DAVAO_ORIENTAL = 1715342;
-            private static final int BOSTON_PH = 1723862;
-    private static final int SWITZERLAND = 2658434;
-        private static final int ZURICH_CANTON = 2657895;
-            private static final int ZURICH_CITY = 2657896;
+    private static final long UNITED_STATES = 6252001;
+        private static final long MASSACHUSETTS = 6254926;
+            private static final long BOSTON_MA = 4930956;
+            private static final long HAVERHILL_MA = 4939085;
+            private static final long WORCESTER_MA = 4956184;
+            private static final long SPRINGFIELD_MA = 4951788;
+        private static final long MISSOURI = 4398678;
+            private static final long SPRINGFIELD_MO = 4409896;
+        private static final long ILLINOIS = 4896861;
+            private static final long SPRINGFIELD_IL = 4250542;
+        private static final long VIRGINIA = 6254928;
+            private static final long FAIRFAX_COUNTY_VA = 4758041;
+            private static final long RESTON_VA = 4781530;
+            private static final long SPRINGFIELD_VA = 4787117;
+        private static final long OREGON = 5744337;
+            private static final long SPRINGFIELD_OR = 5754005;
+        private static final long DELAWARE = 4142224;
+            private static final long BETHEL_DE_US = 4141443;
+    private static final long GERMANY = 2921044;
+        private static final long NR_WESTPHALIA = 2861876; // state of North Rhine-Westphalia
+            private static final long BETHEL_GER = 2949766;
+    private static final long UNITED_KINGDOM = 2635167;
+        private static final long ENGLAND = 6269131;
+            private static final long LONDON_UK_41 = 2643741;
+            private static final long LONDON_UK_43 = 2643743;
+            private static final long HAVERHILL_UK = 2647310;
+            private static final long WORCESTER_UK = 2633563;
+        private static final long OXFORDSHIRE = 2640726;
+            private static final long OXFORD_UK = 2640729;
+    private static final long CANADA = 6251999;
+        private static final long ONTARIO = 6093943;
+            private static final long LONDON_ON = 6058560;
+    private static final long PHILIPPINES = 1694008;
+        private static final long DAVAO = 7521309;
+        private static final long DAVAO_ORIENTAL = 1715342;
+            private static final long BOSTON_PH = 1723862;
+    private static final long SWITZERLAND = 2658434;
+        private static final long ZURICH_CANTON = 2657895;
+            private static final long ZURICH_CITY = 2657896;
 
 
     @Parameters(name="{index}: multipartResolve({0} {1} {2})")
     public static Iterable<Object[]> parameters() {
         return Arrays.asList(new Object[][] {
-            { "Springfield", "Massachusetts", "United States", new Integer[] { SPRINGFIELD_MA }, MASSACHUSETTS, UNITED_STATES },
-            { "Springfield", "Illinois", "United States", new Integer[] { SPRINGFIELD_IL }, ILLINOIS, UNITED_STATES },
-            { "Springfield", "Missouri", "United States", new Integer[] { SPRINGFIELD_MO }, MISSOURI, UNITED_STATES },
-            { "Springfield", "Virginia", "United States", new Integer[] { SPRINGFIELD_VA }, VIRGINIA, UNITED_STATES },
-            { "Springfield", "Oregon", "United States", new Integer[] { SPRINGFIELD_OR }, OREGON, UNITED_STATES },
-            { "Reston", "Virginia", "United States", new Integer[] { RESTON_VA }, VIRGINIA, UNITED_STATES },
-            { "Reston", "Fairfax County", "United States", new Integer[] { RESTON_VA }, FAIRFAX_COUNTY_VA, UNITED_STATES },
-            { "Reston", "Fairfax", "US", new Integer[] { RESTON_VA }, FAIRFAX_COUNTY_VA, UNITED_STATES },
-            { "Boston", "Massachusetts", "United States", new Integer[] { BOSTON_MA }, MASSACHUSETTS, UNITED_STATES },
-            { "Haverhill", "Massachusetts", "United States", new Integer[] { HAVERHILL_MA }, MASSACHUSETTS, UNITED_STATES },
-            { "Worcester", "Massachusetts", "United States", new Integer[] { WORCESTER_MA }, MASSACHUSETTS, UNITED_STATES },
-            { "Haverhill", "England", "United Kingdom", new Integer[] { HAVERHILL_UK }, ENGLAND, UNITED_KINGDOM },
-            { "Worcester", "England", "United Kingdom", new Integer[] { WORCESTER_UK }, ENGLAND, UNITED_KINGDOM },
-            { "Oxford", "England", "United Kingdom", new Integer[] { OXFORD_UK }, ENGLAND, UNITED_KINGDOM },
-            { "Oxford", "Oxfordshire", "United Kingdom", new Integer[] { OXFORD_UK }, OXFORDSHIRE, UNITED_KINGDOM },
-            { "London", "England", "United Kingdom", new Integer[] { LONDON_UK_43 }, ENGLAND, UNITED_KINGDOM },
-            { "London", "Ontario", "Canada", new Integer[] { LONDON_ON }, ONTARIO, CANADA },
-            { "Boston", "Davao", "Philippines", new Integer[] { BOSTON_PH }, DAVAO, PHILIPPINES },
-            { "Boston", "Davao Oriental", "Philippines", new Integer[] { BOSTON_PH }, DAVAO_ORIENTAL, PHILIPPINES },
-            { "Bethel", "Delaware", "United States", new Integer[] { BETHEL_DE_US }, DELAWARE, UNITED_STATES },
-            { "Bethel", "North Rhine-Westphalia", "Germany", new Integer[] { BETHEL_GER }, NR_WESTPHALIA, GERMANY },
-            { "Bethel", "DE", "US", new Integer[] { BETHEL_DE_US }, DELAWARE, UNITED_STATES },
-            { "Bethel", "NRW", "DE", new Integer[] { BETHEL_GER }, NR_WESTPHALIA, GERMANY },
-            { "London", "ENG", "UK", new Integer[] { LONDON_UK_43 }, ENGLAND, UNITED_KINGDOM },
-            { "London", "ENG", "GB", new Integer[] { LONDON_UK_43 }, ENGLAND, UNITED_KINGDOM },
-            { "London", "ON", "CA", new Integer[] { LONDON_ON }, ONTARIO, CANADA },
-            { "London", "ON", "CAN", new Integer[] { LONDON_ON }, ONTARIO, CANADA },
-            { "Zurich", "ZH", "CH", new Integer[] { ZURICH_CITY }, ZURICH_CANTON, SWITZERLAND },
+            { "Springfield", "Massachusetts", "United States", new Long[] { SPRINGFIELD_MA }, MASSACHUSETTS, UNITED_STATES },
+            { "Springfield", "Illinois", "United States", new Long[] { SPRINGFIELD_IL }, ILLINOIS, UNITED_STATES },
+            { "Springfield", "Missouri", "United States", new Long[] { SPRINGFIELD_MO }, MISSOURI, UNITED_STATES },
+            { "Springfield", "Virginia", "United States", new Long[] { SPRINGFIELD_VA }, VIRGINIA, UNITED_STATES },
+            { "Springfield", "Oregon", "United States", new Long[] { SPRINGFIELD_OR }, OREGON, UNITED_STATES },
+            { "Reston", "Virginia", "United States", new Long[] { RESTON_VA }, VIRGINIA, UNITED_STATES },
+            { "Reston", "Fairfax County", "United States", new Long[] { RESTON_VA }, FAIRFAX_COUNTY_VA, UNITED_STATES },
+            { "Reston", "Fairfax", "US", new Long[] { RESTON_VA }, FAIRFAX_COUNTY_VA, UNITED_STATES },
+            { "Boston", "Massachusetts", "United States", new Long[] { BOSTON_MA }, MASSACHUSETTS, UNITED_STATES },
+            { "Haverhill", "Massachusetts", "United States", new Long[] { HAVERHILL_MA }, MASSACHUSETTS, UNITED_STATES },
+            { "Worcester", "Massachusetts", "United States", new Long[] { WORCESTER_MA }, MASSACHUSETTS, UNITED_STATES },
+            { "Haverhill", "England", "United Kingdom", new Long[] { HAVERHILL_UK }, ENGLAND, UNITED_KINGDOM },
+            { "Worcester", "England", "United Kingdom", new Long[] { WORCESTER_UK }, ENGLAND, UNITED_KINGDOM },
+            { "Oxford", "England", "United Kingdom", new Long[] { OXFORD_UK }, ENGLAND, UNITED_KINGDOM },
+            { "Oxford", "Oxfordshire", "United Kingdom", new Long[] { OXFORD_UK }, OXFORDSHIRE, UNITED_KINGDOM },
+            { "London", "England", "United Kingdom", new Long[] { LONDON_UK_43 }, ENGLAND, UNITED_KINGDOM },
+            { "London", "Ontario", "Canada", new Long[] { LONDON_ON }, ONTARIO, CANADA },
+            { "Boston", "Davao", "Philippines", new Long[] { BOSTON_PH }, DAVAO, PHILIPPINES },
+            { "Boston", "Davao Oriental", "Philippines", new Long[] { BOSTON_PH }, DAVAO_ORIENTAL, PHILIPPINES },
+            { "Bethel", "Delaware", "United States", new Long[] { BETHEL_DE_US }, DELAWARE, UNITED_STATES },
+            { "Bethel", "North Rhine-Westphalia", "Germany", new Long[] { BETHEL_GER }, NR_WESTPHALIA, GERMANY },
+            { "Bethel", "DE", "US", new Long[] { BETHEL_DE_US }, DELAWARE, UNITED_STATES },
+            { "Bethel", "NRW", "DE", new Long[] { BETHEL_GER }, NR_WESTPHALIA, GERMANY },
+            { "London", "ENG", "UK", new Long[] { LONDON_UK_43 }, ENGLAND, UNITED_KINGDOM },
+            { "London", "ENG", "GB", new Long[] { LONDON_UK_43 }, ENGLAND, UNITED_KINGDOM },
+            { "London", "ON", "CA", new Long[] { LONDON_ON }, ONTARIO, CANADA },
+            { "London", "ON", "CAN", new Long[] { LONDON_ON }, ONTARIO, CANADA },
+            { "Zurich", "ZH", "CH", new Long[] { ZURICH_CITY }, ZURICH_CANTON, SWITZERLAND },
             { "", "ENG", "UK", null, ENGLAND, UNITED_KINGDOM },
-            { "London", "", "UK", new Integer[] { LONDON_UK_43 }, null, UNITED_KINGDOM },
-            { "London", "", "", new Integer[] { LONDON_UK_43 }, null, null },
+            { "London", "", "UK", new Long[] { LONDON_UK_43 }, null, UNITED_KINGDOM },
+            { "London", "", "", new Long[] { LONDON_UK_43 }, null, null },
             { "", "ENG", "", null, ENGLAND, null },
             { "", "", "UK", null, null, UNITED_KINGDOM },
             { "", "", "", null, null, null },
@@ -146,16 +146,16 @@ public class MultipartLocationResolverTest {
     private final String city;
     private final String state;
     private final String country;
-    private final Set<Integer> cityIds;
-    private final Integer stateId;
-    private final Integer countryId;
+    private final Set<Long> cityIds;
+    private final Long stateId;
+    private final Long countryId;
 
     public MultipartLocationResolverTest(String city, String state, String country,
-            Integer[] ctyIds, Integer stateId, Integer countryId) {
+            Long[] ctyIds, Long stateId, Long countryId) {
         this.city = city;
         this.state = state;
         this.country = country;
-        this.cityIds = new HashSet<Integer>();
+        this.cityIds = new HashSet<Long>();
         if (ctyIds != null && ctyIds.length > 0) {
             this.cityIds.addAll(Arrays.asList(ctyIds));
         }
@@ -182,7 +182,7 @@ public class MultipartLocationResolverTest {
         }
     }
 
-    private void verifyLocation(final String label, final Integer expected, final ResolvedLocation loc) {
+    private void verifyLocation(final String label, final Long expected, final ResolvedLocation loc) {
         if (expected == null) {
             assertNull(String.format("expected null %s", label), loc);
         } else {
