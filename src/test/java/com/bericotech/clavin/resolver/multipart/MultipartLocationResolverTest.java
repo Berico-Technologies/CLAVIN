@@ -54,7 +54,7 @@ import org.junit.runners.Parameterized.Parameters;
 @RunWith(Parameterized.class)
 public class MultipartLocationResolverTest {
     // expected geonameID numbers for given location names
-    private static final long UNITED_STATES = 2147483648L;
+    private static final long UNITED_STATES = 6252001L;
         private static final long MASSACHUSETTS = 6254926L;
             private static final long BOSTON_MA = 4930956L;
             private static final long HAVERHILL_MA = 4939085L;
@@ -188,7 +188,7 @@ public class MultipartLocationResolverTest {
         } else {
             assertNotNull(String.format("expected non-null %s", label), loc);
             GeoName geo = loc.getGeoname();
-            assertEquals(String.format("Incorrect %s [%s]", label, geo), expected.intValue(), geo.getGeonameID());
+            assertEquals(String.format("Incorrect %s [%s]", label, geo), expected.longValue(), geo.getGeonameID());
         }
     }
 }

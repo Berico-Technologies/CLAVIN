@@ -158,9 +158,9 @@ public class MultiLevelMultipartLocationResolverTest {
     }
 
     private final String[] parts;
-    private final Integer expectedId;
+    private final Long expectedId;
 
-    public MultiLevelMultipartLocationResolverTest(List<String> parts, Integer expectedId) {
+    public MultiLevelMultipartLocationResolverTest(List<String> parts, Long expectedId) {
         this.parts = parts.toArray(new String[0]);
         this.expectedId = expectedId;
     }
@@ -173,7 +173,7 @@ public class MultiLevelMultipartLocationResolverTest {
         } else {
             assertNotNull("expected non-null location", loc);
             GeoName geo = loc.getGeoname();
-            assertEquals(String.format("Incorrect Location [%s]", geo), expectedId.intValue(), geo.getGeonameID());
+            assertEquals(String.format("Incorrect Location [%s]", geo), expectedId.longValue(), geo.getGeonameID());
         }
     }
 }
