@@ -670,7 +670,7 @@ public class IndexDirectoryBuilder {
             // if one name is preferred and the other is not, use the preferred name
             int comp = Boolean.compare(preferredName, other.preferredName);
             // if preferred is the same, use a short name over a non-short name
-            comp = comp != 0 ? Boolean.compare(shortName, other.shortName) : comp;
+            comp = comp == 0 ? Boolean.compare(shortName, other.shortName) : comp;
             // if all things are still equal, use this
             return comp >= 0 ? this : other;
         }
