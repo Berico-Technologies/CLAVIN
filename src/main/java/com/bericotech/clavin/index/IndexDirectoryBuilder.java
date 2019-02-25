@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.file.Path;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -36,17 +37,10 @@ import org.apache.commons.cli.ParseException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field;
-import org.apache.lucene.document.IntField;
-import org.apache.lucene.document.LongField;
-import org.apache.lucene.document.StoredField;
-import org.apache.lucene.document.StringField;
-import org.apache.lucene.document.TextField;
+import org.apache.lucene.document.*;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.FSDirectory;
-import org.apache.lucene.util.Version;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -115,7 +109,7 @@ public class IndexDirectoryBuilder {
         this.fullAncestry = fullAncestryIn;
     }
 
-    public void buildIndex(final File indexDir, final List<File> gazetteerFiles, final File altNamesFile) throws IOException {
+    public void buildIndex(final Path indexDir, final List<File> gazetteerFiles, final File altNamesFile) throws IOException {
         LOG.info("Indexing... please wait.");
 
         indexCount = 0;
@@ -128,7 +122,7 @@ public class IndexDirectoryBuilder {
         Analyzer indexAnalyzer = new WhitespaceLowerCaseAnalyzer();
 
         // create the object that will actually build the Lucene index
-        indexWriter = new IndexWriter(index, new IndexWriterConfig(Version.LUCENE_4_9, indexAnalyzer));
+        indexWriter = new IndexWriter(index, new IndexWriterConfig(indexAnalyzer));
 
         // let's see how long this takes...
         Date start = new Date();
@@ -398,7 +392,8 @@ public class IndexDirectoryBuilder {
         // reuse a single Document and field instances
         Document doc = new Document();
         doc.add(new StoredField(GEONAME.key(), fullAncestry ? geoName.getGazetteerRecordWithAncestry() : geoName.getGazetteerRecord()));
-        doc.add(new IntField(GEONAME_ID.key(), geoName.getGeonameID(), Field.Store.YES));
+        doc.add(new IntPoint(GEONAME_ID.key(), geoName.getGeonameID()));
+        doc.add(new StoredField(GEONAME_ID.key(), geoName.getGeonameID()));
         // if the alternate names file was loaded and we found a preferred name for this GeoName, store it
         if (preferredName != null) {
             doc.add(new StoredField(PREFERRED_NAME.key(), preferredName.name));
@@ -406,28 +401,35 @@ public class IndexDirectoryBuilder {
         // index the direct parent ID in the PARENT_ID field
         GeoName parent = geoName.getParent();
         if (parent != null) {
-            doc.add(new IntField(PARENT_ID.key(), parent.getGeonameID(), Field.Store.YES));
+            doc.add(new IntPoint(PARENT_ID.key(), parent.getGeonameID()));
+            doc.add(new StoredField(PARENT_ID.key(), parent.getGeonameID()));
         }
         // index all ancestor IDs in the ANCESTOR_IDS field; this is a secondary field
         // so it can be used to restrict searches and PARENT_ID can be used for ancestor
         // resolution
         while (parent != null) {
-            doc.add(new IntField(ANCESTOR_IDS.key(), parent.getGeonameID(), Field.Store.YES));
+            doc.add(new IntPoint(ANCESTOR_IDS.key(), parent.getGeonameID()));
+            doc.add(new StoredField(ANCESTOR_IDS.key(), parent.getGeonameID()));
             parent = parent.getParent();
         }
-        doc.add(new LongField(POPULATION.key(), geoName.getPopulation(), Field.Store.YES));
+        doc.add(new LongPoint(POPULATION.key(), geoName.getPopulation()));
+        doc.add(new StoredField(POPULATION.key(), geoName.getPopulation()));
         // set up sort field based on population and geographic feature type
         if (geoName.getFeatureClass().equals(FeatureClass.P) || geoName.getFeatureCode().name().startsWith("PCL")) {
             if (geoName.getGeonameID() != 2643741) // todo: temporary hack until GeoNames.org fixes the population for City of London
+            {
                 // boost cities and countries when sorting results by population
-                doc.add(new LongField(SORT_POP.key(), geoName.getPopulation() * 11, Field.Store.YES));
+                doc.add(new LongPoint(SORT_POP.key(), geoName.getPopulation() * 11));
+                doc.add(new SortedNumericDocValuesField(SORT_POP.key(), geoName.getPopulation() * 11));
+            }
         } else {
             // don't boost anything else, because people rarely talk about other stuff
             // (e.g., Washington State's population is more than 10x that of Washington, DC
             // but Washington, DC is mentioned far more frequently than Washington State)
-            doc.add(new LongField(SORT_POP.key(), geoName.getPopulation(), Field.Store.YES));
+            doc.add(new LongPoint(SORT_POP.key(), geoName.getPopulation()));
+            doc.add(new SortedNumericDocValuesField(SORT_POP.key(), geoName.getPopulation()));
         }
-        doc.add(new IntField(HISTORICAL.key(), IndexField.getBooleanIndexValue(geoName.getFeatureCode().isHistorical()), Field.Store.NO));
+        doc.add(new IntPoint(HISTORICAL.key(), IndexField.getBooleanIndexValue(geoName.getFeatureCode().isHistorical())));
         doc.add(new StringField(FEATURE_CODE.key(), geoName.getFeatureCode().name(), Field.Store.NO));
 
         // create a unique Document for each name of this GeoName
@@ -560,7 +562,7 @@ public class IndexDirectoryBuilder {
             System.exit(-1);
         }
 
-        new IndexDirectoryBuilder(fullAncestry).buildIndex(idir, gazetteerFiles, altNamesFile);
+        new IndexDirectoryBuilder(fullAncestry).buildIndex(idir.toPath(), gazetteerFiles, altNamesFile);
     }
 
     private static Options getOptions() {

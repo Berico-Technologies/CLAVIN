@@ -1,9 +1,6 @@
 package com.bericotech.clavin.index;
 
-import java.io.Reader;
-
 import org.apache.lucene.analysis.util.CharTokenizer;
-import org.apache.lucene.util.Version;
 
 /*#####################################################################
  * 
@@ -46,12 +43,10 @@ public class WhitespaceLowerCaseTokenizer extends CharTokenizer {
     
     /**
      * Call the "super" constructor.
-     * 
-     * @param matchVersion      e.g., Version.LUCENE_4_9
-     * @param in
+     *
      */
-    public WhitespaceLowerCaseTokenizer(Version matchVersion, Reader in) {
-        super(matchVersion, in);
+    public WhitespaceLowerCaseTokenizer() {
+        super();
     }
 
     /** Collects only characters which do not satisfy

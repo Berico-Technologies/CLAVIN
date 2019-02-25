@@ -1,6 +1,6 @@
 package com.bericotech.clavin.index;
 
-import org.apache.lucene.search.similarities.DefaultSimilarity;
+import org.apache.lucene.search.similarities.ClassicSimilarity;
 
 /*#####################################################################
  * 
@@ -35,7 +35,7 @@ import org.apache.lucene.search.similarities.DefaultSimilarity;
  * calculating Lucene relevance score.
  * 
  */
-public class BinarySimilarity extends DefaultSimilarity {
+public class BinarySimilarity extends ClassicSimilarity {
     
     /**
      * Simple default constructor for {@link BinarySimilarity}.

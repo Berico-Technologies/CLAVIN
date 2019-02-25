@@ -2,7 +2,7 @@ package com.bericotech.clavin.index;
 
 import static org.junit.Assert.*;
 
-import org.apache.lucene.search.similarities.DefaultSimilarity;
+import org.apache.lucene.search.similarities.ClassicSimilarity;
 import org.junit.Test;
 
 /*#####################################################################
@@ -44,7 +44,7 @@ public class BinarySimilarityTest {
      */
     @Test
     public void testTF() {
-        DefaultSimilarity sim = new BinarySimilarity();
+        BinarySimilarity sim = new BinarySimilarity();
         assertEquals("big positive number", 1, (int)Math.round(sim.tf(999)));
         assertEquals("slightly more than 1", 1, (int)Math.round(sim.tf(2)));
         assertEquals("just 1", 1, (int)Math.round(sim.tf(1)));
